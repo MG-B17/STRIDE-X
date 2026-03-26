@@ -25,7 +25,7 @@ dependencies:
   #Functional Programming in Dart. Purify your Dart code using efficient immutable data structures, monads, lenses and other FP tools
   dartz: ^0.10.1
   #Flutter Localization is a package use for in-app localization with map data. More easier and faster to implement and inspired by the flutter_localizations itself.
-  flutter_localization: ^0.3.3
+  flutter_localization:
   #A wrapper around InheritedWidget to make them easier to use and more reusable
   provider: ^6.1.5+1
   #An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
@@ -39,15 +39,13 @@ dependencies:
   #Wrapper for Apple's HealthKit on iOS and Google's Health Connect on Android
   health: ^13.3.1
   #Geolocation plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API for generic location (GPS etc.) functions
-  geolocator: ^14.0.2
-  #A cross platform plugin for displaying and scheduling local notifications for Flutter applications with the ability to customise for each platform
-  flutter_local_notifications: 
+  geolocator: 
   #A highly customizable Flutter chart library that supports Line Chart, Bar Chart, Pie Chart, Scatter Chart, and Radar Chart.
-  fl_chart: ^1.2.0
+  fl_chart: 
   #Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: ^0.20.2
   #Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: ^12.0.1
+  share_plus: 
 
 dev_dependencies:
   flutter_test:
