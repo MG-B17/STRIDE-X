@@ -14,9 +14,9 @@ class StrideX extends StatelessWidget {
       splitScreenMode: true,
       builder: (_ , child) {
         return MaterialApp.router(
-          routerConfig: appRouter(),
+          routerConfig: appRouter,
           debugShowCheckedModeBanner: false,
-          theme:AppTheme.darkTheme,
+          theme:AppTheme.lightTheme,
         );
       },
     );

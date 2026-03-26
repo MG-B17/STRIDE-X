@@ -12,7 +12,7 @@ class AppColors {
 
   // Dark Mode Palette 
   static const Color backgroundDark = Color(0xFF001208); 
-  static const Color surfaceGreen = Color(0xFF021C10); 
+  static const Color surfaceGreen = Color(0xFF001A0B); 
   static const Color borderStrokeDark = Color.fromRGBO(74, 222, 128, 0.1);
   static const Color textHighDark = Color(0xFFF8FAFC); 
   static const Color textMediumDark = Color(0xFF94A3B8); 
@@ -31,5 +31,6 @@ class AppColors {
   static const Color warning = Color(0xFFFBBF24);  
   static const Color danger = Color(0xFFF87171);   
   static const Color calories = Color(0xFFFB923C); 
+  static const Color black = Colors.black;
  
 }

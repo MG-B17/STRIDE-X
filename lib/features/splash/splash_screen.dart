@@ -11,6 +11,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool isdark = false ;
   @override
   void initState() {
     super.initState();
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
             opacity: .19,
             child: SvgPicture.asset("assets/svg/Splash Screen.svg"),
           ),
-          SvgPicture.asset("assets/svg/splash_screen_icon.svg"),
+          Center(child: SvgPicture.asset("assets/svg/splash_screen_icon.svg")),
         ],
       ),
     );

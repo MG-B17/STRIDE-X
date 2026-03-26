@@ -9,50 +9,48 @@ import 'package:stridex/features/profile/profile_screen.dart';
 import 'package:stridex/features/splash/splash_screen.dart';
 import 'package:stridex/features/streak/streak_screen.dart';
 
-GoRouter appRouter() {
-  return GoRouter(
+final GoRouter appRouter = GoRouter(
     initialLocation: "/",
     routes: [
       GoRoute(
         path: "/",
         name: AppRouteConstant.splashScreenRoute,
-        builder: (context, state) => SplashScreen(),
+        builder: (context, state) =>const SplashScreen(),
       ),
       GoRoute(
         path: "/onboarding",
         name: AppRouteConstant.onboardingScreenRoute,
-        builder: (context, state) => OnboardingScreen(),
+        builder: (context, state) =>const OnboardingScreen(),
       ),
       GoRoute(
         path: "/premission",
         name: AppRouteConstant.premissionScreenRoute,
-        builder: (context, state) => PremissionScreen(),
+        builder: (context, state) =>const PremissionScreen(),
       ),
       GoRoute(
         path: "/layout",
         name: AppRouteConstant.layoutScreenRoute,
-        builder: (context, state) => Layout(),
+        builder: (context, state) =>const Layout(),
       ),
       GoRoute(
         path: "/home",
         name: AppRouteConstant.homeScreenRoute,
-        builder: (context, state) => HomeScreen(),
+        builder: (context, state) =>const HomeScreen(),
       ),
       GoRoute(
         path: "/analytic",
         name: AppRouteConstant.analyticScreenRoute,
-        builder: (context, state) => AnalyticsScreen(),
+        builder: (context, state) =>const AnalyticsScreen(),
       ),
       GoRoute(
         path: "/streak",
         name: AppRouteConstant.streakScreenRoute,
-        builder: (context, state) => StreakScreen(),
+        builder: (context, state) =>const StreakScreen(),
       ),
       GoRoute(
         path: "/profile",
         name: AppRouteConstant.profileScreenRoute,
-        builder: (context, state) => ProfileScreen(),
+        builder: (context, state) =>const ProfileScreen(),
       ),
     ],
   );
-}
