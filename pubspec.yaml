@@ -1,0 +1,80 @@
+name: stridex
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  #Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
+  get_it: ^9.2.1
+  #A flutter plugin for adapting screen and font size.Guaranteed to look good on different models
+  flutter_screenutil: ^5.9.3
+  #A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
+  go_router: ^17.1.0
+  #A Dart package that helps to implement value based equality without needing to explicitly override == and hashCode.
+  equatable: ^2.0.8
+  #Functional Programming in Dart. Purify your Dart code using efficient immutable data structures, monads, lenses and other FP tools
+  dartz: ^0.10.1
+  #Flutter Localization is a package use for in-app localization with map data. More easier and faster to implement and inspired by the flutter_localizations itself.
+  flutter_localization: ^0.3.3
+  #A wrapper around InheritedWidget to make them easier to use and more reusable
+  provider: ^6.1.5+1
+  #An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
+  flutter_svg: ^2.2.4
+  #Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
+  shared_preferences:
+  #Customize Flutter's default white native splash screen with background color and splash image. Supports dark mode, full screen, and more.
+  flutter_native_splash: ^2.4.7
+  #Customizable animated page indicator with a set of built-in effects
+  smooth_page_indicator: ^2.0.1
+  #Wrapper for Apple's HealthKit on iOS and Google's Health Connect on Android
+  health: ^13.3.1
+  #Geolocation plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API for generic location (GPS etc.) functions
+  geolocator: ^14.0.2
+  #A cross platform plugin for displaying and scheduling local notifications for Flutter applications with the ability to customise for each platform
+  flutter_local_notifications: 
+  #A highly customizable Flutter chart library that supports Line Chart, Bar Chart, Pie Chart, Scatter Chart, and Radar Chart.
+  fl_chart: ^1.2.0
+  #Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
+  intl: ^0.20.2
+  #Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
+  share_plus: ^12.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+
+
+  uses-material-design: true
+  assets:
+    - assets/svg/
+  
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Manrope-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Manrope-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Manrope-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Manrope-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Manrope-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Manrope-ExtraBold.ttf
+          weight: 800
