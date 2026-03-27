@@ -5,6 +5,7 @@ import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/features/history/presentation/widgets/sub_state_container.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 
 class StreakCard extends StatelessWidget {
   const StreakCard({super.key,required this.strak,required this.longestStreak,required this.totalWins});
@@ -14,17 +15,8 @@ class StreakCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
+    return StrideCard(
       padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(
-          color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
-        ),
-      ),
       child: Column(
         children: [
           // Flame Icon with Glow

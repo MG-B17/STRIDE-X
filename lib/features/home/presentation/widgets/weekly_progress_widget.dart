@@ -22,7 +22,6 @@ class WeeklyProgressWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,17 +67,10 @@ class WeeklyProgressWidget extends StatelessWidget {
                               gradient: isActive
                                   ? AppColors.actionGradient
                                   : LinearGradient(
-                                      colors: isDark
-                                          ? [
-                                              const Color(0xFF1A4D2E),
-                                              const Color(0xFF0D2918)
-                                            ]
-                                          : [
-                                              AppColors.kineticGreen
-                                                  .withValues(alpha: 0.18),
-                                              AppColors.kineticGreen
-                                                  .withValues(alpha: 0.08),
-                                            ],
+                                      colors: [
+                                        colorScheme.secondaryContainer,
+                                        colorScheme.onSecondaryContainer,
+                                      ],
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                     ),

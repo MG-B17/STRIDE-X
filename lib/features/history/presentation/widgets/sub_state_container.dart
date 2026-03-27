@@ -10,13 +10,10 @@ class SubStateContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16.h),
       decoration: BoxDecoration(
-        color: isDark
-            ? Colors.black.withValues(alpha: 0.2)
-            : context.colorScheme.onSurface.withValues(alpha: 0.05),
+        color: context.colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(

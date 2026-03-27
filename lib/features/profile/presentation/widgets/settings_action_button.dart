@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 
 class SettingsActionButton extends StatelessWidget {
   final IconData icon;
@@ -18,19 +18,10 @@ class SettingsActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: StrideCard(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.surfaceGreen : context.colorScheme.surface,
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(
-            color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
-          ),
-        ),
         child: Row(
           children: [
             Icon(icon, color: context.colorScheme.primary, size: 22.sp),

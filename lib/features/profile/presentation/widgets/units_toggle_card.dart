@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
-import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 
 class UnitsToggleCard extends StatefulWidget {
@@ -45,17 +45,8 @@ class _UnitsToggleCardState extends State<UnitsToggleCard> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
-        ),
-      ),
+    return StrideCard(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,7 +67,7 @@ class _UnitsToggleCardState extends State<UnitsToggleCard> {
           Container(
             padding: EdgeInsets.all(4.w),
             decoration: BoxDecoration(
-              color: isDark ? Colors.black.withValues(alpha: 0.2) : context.colorScheme.onSurface.withValues(alpha: 0.05),
+              color: context.colorScheme.surfaceContainer,
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(

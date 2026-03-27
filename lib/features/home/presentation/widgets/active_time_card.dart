@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stridex/core/constant/app_strings.dart';
-import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 
@@ -13,17 +12,13 @@ class ActiveTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : colorScheme.surface,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark
-              ? AppColors.borderStrokeDark
-              : AppColors.borderStrokeLight,
+          color: colorScheme.outlineVariant,
         ),
       ),
       child: Row(

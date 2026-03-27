@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/features/home/presentation/screens/home_screen.dart';
 import 'package:stridex/features/analytics/presentation/screens/analytics_screen.dart';
@@ -28,7 +27,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
       body: _screens[_currentIndex],
@@ -37,15 +35,15 @@ class _LayoutScreenState extends State<LayoutScreen> {
           left: 16.w,
           right: 16.w,
           top: 12.h,
-          bottom: MediaQuery.of(context).padding.bottom > 0 
-              ? MediaQuery.of(context).padding.bottom 
+          bottom: ScreenUtil().bottomBarHeight > 0 
+              ? ScreenUtil().bottomBarHeight 
               : 16.h,
         ),
         decoration: BoxDecoration(
-          color: isDark ? AppColors.surfaceGreen : theme.colorScheme.surface,
+          color: theme.colorScheme.surface,
           border: Border(
             top: BorderSide(
-              color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
+              color: theme.colorScheme.outlineVariant,
             ),
           ),
         ),

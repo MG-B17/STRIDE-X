@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 
 class InsightCard extends StatelessWidget {
   final IconData icon;
@@ -20,7 +20,7 @@ class InsightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _AnalyticsCard(
+    return StrideCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -43,30 +43,6 @@ class InsightCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _AnalyticsCard extends StatelessWidget {
-  final Widget child;
-  const _AnalyticsCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final colorScheme = context.colorScheme;
-
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(24.w),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : colorScheme.surface,
-        borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(
-          color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
-        ),
-      ),
-      child: child,
     );
   }
 }

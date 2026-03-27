@@ -11,9 +11,6 @@ class ConsistencySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -27,25 +24,22 @@ class ConsistencySection extends StatelessWidget {
             ),
           ),
         ),
-        _ConsistencyRow(
+        const _ConsistencyRow(
           color: AppColors.kineticGreen,
           label: AppStrings.goalReached,
           days: '3 Days',
-          isDark: isDark,
         ),
         const VerticalSpacingWidget(value: 8),
-        _ConsistencyRow(
+        const _ConsistencyRow(
           color: AppColors.warning,
           label: AppStrings.nearGoal,
           days: '2 Days',
-          isDark: isDark,
         ),
         const VerticalSpacingWidget(value: 8),
-        _ConsistencyRow(
+        const _ConsistencyRow(
           color: AppColors.danger,
           label: AppStrings.belowGoal,
           days: '2 Days',
-          isDark: isDark,
         ),
       ],
     );
@@ -56,13 +50,11 @@ class _ConsistencyRow extends StatelessWidget {
   final Color color;
   final String label;
   final String days;
-  final bool isDark;
 
   const _ConsistencyRow({
     required this.color,
     required this.label,
     required this.days,
-    required this.isDark,
   });
 
   @override
@@ -70,10 +62,10 @@ class _ConsistencyRow extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : context.colorScheme.surface,
+        color: context.colorScheme.surface,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
+          color: context.colorScheme.outlineVariant,
         ),
       ),
       child: Row(

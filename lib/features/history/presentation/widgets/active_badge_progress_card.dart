@@ -4,23 +4,15 @@ import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 
 class ActiveBadgeProgressCard extends StatelessWidget {
   const ActiveBadgeProgressCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
+    return StrideCard(
       padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceGreen : context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
-        ),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

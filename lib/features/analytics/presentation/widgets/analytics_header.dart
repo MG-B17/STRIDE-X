@@ -20,9 +20,7 @@ class AnalyticsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final colorScheme = context.colorScheme;
-    
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -33,9 +31,7 @@ class AnalyticsHeader extends StatelessWidget {
         Container(
           padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
-            color: theme.brightness == Brightness.dark
-                ? AppColors.surfaceGreen
-                : colorScheme.surface,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(24.r),
           ),
           child: Row(
