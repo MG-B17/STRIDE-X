@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:stridex/core/constant/route_constant.dart';
-import 'package:stridex/features/analytics_dashboard/analytics_screen.dart';
-import 'package:stridex/features/home/home_screen.dart';
-import 'package:stridex/features/layout/layout.dart';
-import 'package:stridex/features/onboarding/onboarding_screen.dart';
-import 'package:stridex/features/onboarding/premission_screen.dart';
-import 'package:stridex/features/profile/profile_screen.dart';
+import 'package:stridex/features/analytics/presentation/screens/analytics_screen.dart';
+import 'package:stridex/features/history/presentation/screens/history_screen.dart';
+import 'package:stridex/features/home/presentation/screens/home_screen.dart';
+import 'package:stridex/features/layout/presentation/screens/layout_screen.dart';
+import 'package:stridex/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:stridex/features/onboarding/presentation/screens/premission_screen.dart';
+import 'package:stridex/features/profile/presentation/screens/profile_screen.dart';
 import 'package:stridex/features/splash/splash_screen.dart';
-import 'package:stridex/features/streak/streak_screen.dart';
 
 final GoRouter appRouter = GoRouter(
     initialLocation: "/",
@@ -30,7 +30,7 @@ final GoRouter appRouter = GoRouter(
       GoRoute(
         path: "/layout",
         name: AppRouteConstant.layoutScreenRoute,
-        builder: (context, state) =>const Layout(),
+        builder: (context, state) =>const LayoutScreen(),
       ),
       GoRoute(
         path: "/home",
@@ -43,9 +43,9 @@ final GoRouter appRouter = GoRouter(
         builder: (context, state) =>const AnalyticsScreen(),
       ),
       GoRoute(
-        path: "/streak",
-        name: AppRouteConstant.streakScreenRoute,
-        builder: (context, state) =>const StreakScreen(),
+        path: "/history",
+        name: AppRouteConstant.historyScreenRoute,
+        builder: (context, state) =>const HistoryScreen(),
       ),
       GoRoute(
         path: "/profile",

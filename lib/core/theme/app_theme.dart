@@ -16,6 +16,7 @@ class AppTheme {
       onSurface: AppColors.textHighLight,
       error: AppColors.danger,
       onError: AppColors.backgroundLight,
+      surfaceContainer: AppColors.borderStrokeDark
     ),
     textTheme: TextTheme(
       displayLarge: AppTextStylesLight.display,

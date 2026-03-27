@@ -1,0 +1,88 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stridex/core/theme/app_color.dart';
+import 'package:stridex/core/constant/app_strings.dart';
+import 'package:stridex/features/home/presentation/screens/home_screen.dart';
+import 'package:stridex/features/analytics/presentation/screens/analytics_screen.dart';
+import 'package:stridex/features/history/presentation/screens/history_screen.dart';
+import 'package:stridex/features/profile/presentation/screens/profile_screen.dart';
+import 'package:stridex/features/layout/presentation/widgets/bottom_nav_item.dart';
+
+class LayoutScreen extends StatefulWidget {
+  const LayoutScreen({super.key});
+
+  @override
+  State<LayoutScreen> createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> {
+  int _currentIndex = 1;
+
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const AnalyticsScreen(),
+    const HistoryScreen(),
+    const ProfileScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(
+          left: 16.w,
+          right: 16.w,
+          top: 12.h,
+          bottom: MediaQuery.of(context).padding.bottom > 0 
+              ? MediaQuery.of(context).padding.bottom 
+              : 16.h,
+        ),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.surfaceGreen : theme.colorScheme.surface,
+          border: Border(
+            top: BorderSide(
+              color: isDark ? AppColors.borderStrokeDark : AppColors.borderStrokeLight,
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BottomNavItem(
+              index: 0,
+              currentIndex: _currentIndex,
+              icon: Icons.home_outlined,
+              label: AppStrings.navHome,
+              onTap: (i) => setState(() => _currentIndex = i),
+            ),
+            BottomNavItem(
+              index: 1,
+              currentIndex: _currentIndex,
+              icon: Icons.insights,
+              label: AppStrings.navAnalytics,
+              onTap: (i) => setState(() => _currentIndex = i),
+            ),
+            BottomNavItem(
+              index: 2,
+              currentIndex: _currentIndex,
+              icon: Icons.history,
+              label: AppStrings.navHistory,
+              onTap: (i) => setState(() => _currentIndex = i),
+            ),
+            BottomNavItem(
+              index: 3,
+              currentIndex: _currentIndex,
+              icon: Icons.person_outline,
+              label: AppStrings.navProfile,
+              onTap: (i) => setState(() => _currentIndex = i),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

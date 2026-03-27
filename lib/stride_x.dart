@@ -16,7 +16,7 @@ class StrideX extends StatelessWidget {
         return MaterialApp.router(
           routerConfig: appRouter,
           debugShowCheckedModeBanner: false,
-          theme:AppTheme.lightTheme,
+          theme:AppTheme.darkTheme,
         );
       },
     );
