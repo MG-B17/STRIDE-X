@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stridex/core/constant/app_strings.dart';
+import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/constant/route_constant.dart';
+import 'package:stridex/core/utils/cache_helper.dart';
 import 'package:stridex/core/widgets/app_button.dart';
 import 'package:stridex/features/onboarding/data/models/onboarding_model.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
@@ -33,6 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     } else {
       context.goNamed(AppRouteConstant.premissionScreenRoute);
+      CacheHelper.saveData(key: AppKeys.isOnboardingVisited, value: true);
     }
   }
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/constant/route_constant.dart';
+import 'package:stridex/core/utils/cache_helper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void _nextScreen() {
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
-      context.goNamed(AppRouteConstant.onboardingScreenRoute);
+      final bool isOnboardingVisited =
+          CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
+
+      if (isOnboardingVisited) {
+        context.goNamed(AppRouteConstant.layoutScreenRoute);
+      } else {
+        context.goNamed(AppRouteConstant.onboardingScreenRoute);
+      }
     });
   }
 
