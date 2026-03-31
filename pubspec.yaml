@@ -36,8 +36,10 @@ dependencies:
   flutter_native_splash: ^2.4.7
   #Customizable animated page indicator with a set of built-in effects
   smooth_page_indicator: ^2.0.1
-  #Wrapper for Apple's HealthKit on iOS and Google's Health Connect on Android
-  health: ^13.3.1
+  #A Pedometer and Step Detection package for Android and iOS. Step count is streamed as the platform updates it.
+  pedometer: ^4.2.0
+  #A Flutter plugin for accessing and managing SQLite databases on Android and iOS.
+  sqflite:
   #Geolocation plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API for generic location (GPS etc.) functions
   geolocator: 
   #A highly customizable Flutter chart library that supports Line Chart, Bar Chart, Pie Chart, Scatter Chart, and Radar Chart.
@@ -46,6 +48,8 @@ dependencies:
   intl: ^0.20.2
   #Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
   share_plus: 
+  #A reactive functional programming library for Dart, based on Observables, to make it easier to work with asynchronous data streams.
+  rxdart:
 
 dev_dependencies:
   flutter_test:
