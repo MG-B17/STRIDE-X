@@ -90,9 +90,10 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
           CalibrationCubit.get(context).startListening();
         },
       );
-    } else if (state is CalibrationLoading ||
-        state is CalibrationStreamSuccess) {
-      return const CalibrationProgressWidget();
+    } else if (state is CalibrationLoading) {
+      return const CalibrationProgressWidget(steps: 0);
+    } else if (state is CalibrationStreamSuccess) {
+      return CalibrationProgressWidget(steps: state.steps);
     } else if (state is CalibrationStreamFail) {
       return Text(state.message);
     } else if (state is CalibrationSuccess) {

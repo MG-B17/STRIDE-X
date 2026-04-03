@@ -46,7 +46,6 @@ class CalibrationCubit extends Cubit<CalibrationState> {
         realSteps: defaultCalibrationSteps,
         detectedSteps: detectedSteps,
       );
-      print('Calibration factor: ${entity.factor}');
       await calibrationRepository.saveFactor(factor: entity.factor);
       emit(CalibrationSuccess(entity.factor));
       stopListening();
@@ -61,17 +60,23 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     emit(const CalibrationLoading());
     initialSteps = null;
     currentSteps = 0;
-      subscription = calibrationStreamUsecase().listen((either) {
-        either.fold(
-          (failure) {
-            emit(CalibrationStreamFail(failure.message));
-          },
-          (stepCount) {
-             initialSteps ??= stepCount;
-             currentSteps = stepCount;
-          },
-        );
-      });
+    subscription = calibrationStreamUsecase().listen((either) {
+      either.fold(
+        (failure) {
+          emit(CalibrationStreamFail(failure.message));
+        },
+        (stepCount) {
+          if (initialSteps == null) {
+            initialSteps = stepCount;
+            currentSteps = stepCount;
+          } else {
+            currentSteps = stepCount;
+          }
+          final int detected = currentSteps - initialSteps!;
+          emit(CalibrationStreamSuccess(detected));
+        },
+      );
+    });
 
   }
 
