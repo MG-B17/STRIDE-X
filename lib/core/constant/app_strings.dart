@@ -124,4 +124,26 @@ class AppStrings {
   static const String historyGrowthDesc = 'GROWTH';
   static const String pushYourLimits = 'Push your limits.';
   static const String newChallenges = 'New challenges drop in 4 hours.';
+
+  // Calibration Screen
+  static const String calibrationTitle = 'Calibration';
+  static const String strideCalibration = 'Stride Calibration';
+  static const String calibrateWithWalk = 'Calibrate with Walk';
+static const String calibrateWalkDesc =
+    'Walk exactly 10 steps at your normal pace.'
+    'Count each step carefully for best accuracy.\n'
+    'Then tap "Complete Calibration" to finish.';
+
+static const String calibratingStride =
+    "Calibrating...\n"
+    "Walk naturally and track your steps precisely.";
+  static const String startCalibrationWalk = 'START CALIBRATION WALK';
+  static const String manualOverride = 'MANUAL OVERRIDE';
+  static const String completeCalibration = 'Complete Calibration';
+  static const String calibrationWalkAround = 'Make sure to walk around for a few seconds to allow the app to detect your steps accurately.';
+  static const String completeCalibrationFirst = 'Please complete the calibration process before proceeding.';
+  static const String calibrationFail = 'Failed to calibrate';
+  static const String calibrationSuccess ="Calibration successful! You can now proceed.";
+  static const String proceedToHomeScreen = "Proceed to Home Screen";
+  static const String precisionGuaranteed = 'PRECISION GUARANTEED BY STRIDEX\nENGINE';
 }

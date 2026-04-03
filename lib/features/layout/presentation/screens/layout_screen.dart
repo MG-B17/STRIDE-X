@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
+import 'package:stridex/core/di/injection.dart' as di;
+import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
 import 'package:stridex/features/home/presentation/screens/home_screen.dart';
 import 'package:stridex/features/analytics/presentation/screens/analytics_screen.dart';
 import 'package:stridex/features/history/presentation/screens/history_screen.dart';
@@ -28,57 +31,60 @@ class _LayoutScreenState extends State<LayoutScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-          left: 16.w,
-          right: 16.w,
-          top: 12.h,
-          bottom: ScreenUtil().bottomBarHeight > 0 
-              ? ScreenUtil().bottomBarHeight 
-              : 16.h,
-        ),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
-          border: Border(
-            top: BorderSide(
-              color: theme.colorScheme.outlineVariant,
+    return BlocProvider(
+      create: (context) =>di.init<StepController>()..startListening(),
+      child: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.only(
+            left: 16.w,
+            right: 16.w,
+            top: 12.h,
+            bottom: ScreenUtil().bottomBarHeight > 0 
+                ? ScreenUtil().bottomBarHeight 
+                : 16.h,
+          ),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            border: Border(
+              top: BorderSide(
+                color: theme.colorScheme.outlineVariant,
+              ),
             ),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BottomNavItem(
-              index: 0,
-              currentIndex: _currentIndex,
-              icon: Icons.home_outlined,
-              label: AppStrings.navHome,
-              onTap: (i) => setState(() => _currentIndex = i),
-            ),
-            BottomNavItem(
-              index: 1,
-              currentIndex: _currentIndex,
-              icon: Icons.insights,
-              label: AppStrings.navAnalytics,
-              onTap: (i) => setState(() => _currentIndex = i),
-            ),
-            BottomNavItem(
-              index: 2,
-              currentIndex: _currentIndex,
-              icon: Icons.history,
-              label: AppStrings.navHistory,
-              onTap: (i) => setState(() => _currentIndex = i),
-            ),
-            BottomNavItem(
-              index: 3,
-              currentIndex: _currentIndex,
-              icon: Icons.person_outline,
-              label: AppStrings.navProfile,
-              onTap: (i) => setState(() => _currentIndex = i),
-            ),
-          ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              BottomNavItem(
+                index: 0,
+                currentIndex: _currentIndex,
+                icon: Icons.home_outlined,
+                label: AppStrings.navHome,
+                onTap: (i) => setState(() => _currentIndex = i),
+              ),
+              BottomNavItem(
+                index: 1,
+                currentIndex: _currentIndex,
+                icon: Icons.insights,
+                label: AppStrings.navAnalytics,
+                onTap: (i) => setState(() => _currentIndex = i),
+              ),
+              BottomNavItem(
+                index: 2,
+                currentIndex: _currentIndex,
+                icon: Icons.history,
+                label: AppStrings.navHistory,
+                onTap: (i) => setState(() => _currentIndex = i),
+              ),
+              BottomNavItem(
+                index: 3,
+                currentIndex: _currentIndex,
+                icon: Icons.person_outline,
+                label: AppStrings.navProfile,
+                onTap: (i) => setState(() => _currentIndex = i),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,69 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/theme/app_color.dart';
 import 'dart:math' as math;
 import 'package:stridex/core/widgets/spacing_widget.dart';
+import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
+import 'package:stridex/features/home/presentation/controllers/step_counter_state.dart';
 
 class StepRingWidget extends StatelessWidget {
-  final int steps;
-  final int goal;
-  const StepRingWidget({super.key, required this.steps, required this.goal});
+  const StepRingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
-    final double progress = (steps / goal).clamp(0.0, 1.0);
-    final int percent = (progress * 100).round();
 
-    return Center(
-      child: SizedBox(
-        width: 200.w,
-        height: 200.w,
-        child: CustomPaint(
-          painter: _RingPainter(progress: progress),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                _fmt(steps),
-                style: context.textTheme.headlineLarge?.copyWith(
-                  fontSize: 38.sp,
-                  fontWeight: FontWeight.w800,
-                  height: 1.0,
+    return BlocConsumer<StepController, StepCounterState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is Loaded) {
+          return Center(
+            child: SizedBox(
+              width: 200.w,
+              height: 200.w,
+              child: CustomPaint(
+                painter: _RingPainter(progress: state.progressStep),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      _fmt(state.dailyStep),
+                      style: context.textTheme.headlineLarge?.copyWith(
+                        fontSize: 38.sp,
+                        fontWeight: FontWeight.w800,
+                        height: 1.0,
+                      ),
+                    ),
+                    const VerticalSpacingWidget(value: 2),
+                    Text(
+                      AppStrings.steps,
+                      style: context.textTheme.labelSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 2,
+                        color: colorScheme.onSurface.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    const VerticalSpacingWidget(value: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.actionGradient,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Text(
+                        '% ${AppStrings.complete}',
+                        style: context.textTheme.labelSmall?.copyWith(
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.8,
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const VerticalSpacingWidget(value: 2),
-              Text(
-                AppStrings.steps,
-                style: context.textTheme.labelSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 2,
-                  color: colorScheme.onSurface.withValues(alpha: 0.55),
-                ),
-              ),
-              const VerticalSpacingWidget(value: 10),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  gradient: AppColors.actionGradient,
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  '$percent% ${AppStrings.complete}',
-                  style: context.textTheme.labelSmall?.copyWith(
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.8,
-                    color: colorScheme.onPrimary,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else if (state is Error) {
+          return Center(child: Text(state.message));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 

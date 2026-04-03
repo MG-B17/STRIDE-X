@@ -24,3 +24,15 @@ class NetworkFailure extends Failure {
 class UnauthenticatedFailure extends Failure {
   const UnauthenticatedFailure(super.message);
 }
+
+class UnexpectedFailure extends Failure {
+  const UnexpectedFailure(super.message);
+}
+
+class PermissionDeniedFailure extends Failure {
+  const PermissionDeniedFailure(super.message);
+}
+
+class CalibrationStreamFailure extends Failure {
+  const CalibrationStreamFailure(super.message);
+}

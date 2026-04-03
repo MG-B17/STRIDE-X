@@ -6,7 +6,7 @@ abstract class StepCounterLocalData {
   Future<void> saveTodaySteps({required int steps});
 }
 
-class StepCounterLocalDataImpl implements StepCounterLocalData {
+class StepCounterLocalDataImpl extends StepCounterLocalData {
   final DatabaseService databaseService;
   final DateHelper dateHelper;
 

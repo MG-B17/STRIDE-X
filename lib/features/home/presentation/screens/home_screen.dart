@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const StrideXAppBar(),
               const VerticalSpacingWidget(value: 28),
-              const StepRingWidget(steps: 7542, goal: 10000),
+              StepRingWidget(),
               const VerticalSpacingWidget(value: 16),
               const MotivationalTextWidget(),
               const VerticalSpacingWidget(value: 28),

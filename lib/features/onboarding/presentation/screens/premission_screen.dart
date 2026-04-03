@@ -4,15 +4,21 @@ import 'package:go_router/go_router.dart';
 import 'package:stridex/core/constant/route_constant.dart';
 import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/core/utils/extentions.dart';
+import 'package:stridex/core/utils/premission_helper.dart';
 import 'package:stridex/core/widgets/app_button.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/features/onboarding/presentation/widgets/premission_widget/background_decoration.dart';
 import 'package:stridex/features/onboarding/presentation/widgets/premission_widget/premission_card.dart';
 import 'package:stridex/features/onboarding/presentation/widgets/premission_widget/premission_tittle_sub_tittle.dart';
 
-class PremissionScreen extends StatelessWidget {
+class PremissionScreen extends StatefulWidget {
   const PremissionScreen({super.key});
 
+  @override
+  State<PremissionScreen> createState() => _PremissionScreenState();
+}
+
+class _PremissionScreenState extends State<PremissionScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
@@ -46,15 +52,33 @@ class PremissionScreen extends StatelessWidget {
                   ),
                   // Allow button
                   AppButton(
-                    onNext: () =>
-                        context.goNamed(AppRouteConstant.layoutScreenRoute),
+                    onNext: () async {
+                      if (!mounted) return;
+                      final isGranted =
+                          await PermissionHelper.handleActivityRecognitionPermission();
+                      if (isGranted) {
+                        context.goNamed(
+                          AppRouteConstant.calibrationScreenRoute,
+                        );
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Permission is required to count steps',
+                            ),
+                          ),
+                        );
+                      }
+                    },
                     text: AppStrings.allowPermissions,
                   ),
 
                   // Maybe later
                   GestureDetector(
-                    onTap: () =>
-                        context.goNamed(AppRouteConstant.layoutScreenRoute),
+                    onTap: () => context.goNamed(
+                      AppRouteConstant.calibrationScreenRoute,
+                    ),
                     child: Center(
                       child: Text(
                         AppStrings.maybeLater,

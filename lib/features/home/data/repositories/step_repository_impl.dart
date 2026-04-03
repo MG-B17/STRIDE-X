@@ -31,32 +31,29 @@ class StepRepositoryImpl extends StepRepository {
 
   @override
   Stream<Either<Failure, StepCountEntity>> getStepStream() {
-    return Pedometer.stepCountStream.throttleTime(Duration(seconds: 1)).distinct((prev,next)=>prev.steps == next.steps).asyncMap((event) async {
+    return Pedometer.stepCountStream.throttleTime(const Duration(seconds: 1)).asyncMap((event) async {
       try {
         final steps = event.steps;
 
         final baseline = _cachedBaseline ??= await baselineLocalData.getBaseline();
         final goal = _cachedGoal ??= await userStepGoalLocal.getUserStepGoal();
-
         _lastSavedDate ??= await dateHelper.getTodayDate();
         final now = DateTime.now();
-
         if (!_isSameDay(now, _lastSavedDate!)) {
-          await resetStepCounter(steps: steps, todayDate: now);
+          await resetStepCounter(steps: steps.round(), todayDate: now);
         }
-
         int dailySteps;
 
-        if (_isSensorReset(steps, baseline)) {
+        if (_isSensorReset(steps.round(), baseline)) {
           // Sensor reset scenario
           final savedTodayStep = await stepCounterLocalData.getTodaysteps();
-          dailySteps = steps + savedTodayStep;
+          dailySteps = steps.round() + savedTodayStep;
         } else {
-          dailySteps = steps - baseline;
+          dailySteps = steps.round() - baseline;
 
           if (_lastSavedSteps != steps) {
-            _lastSavedSteps = steps;
-            await stepCounterLocalData.saveTodaySteps(steps: steps);
+            _lastSavedSteps = steps.round();
+            await stepCounterLocalData.saveTodaySteps(steps: steps.round());
           }
         }
 

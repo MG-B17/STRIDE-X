@@ -16,8 +16,12 @@ class StrideX extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return ChangeNotifierProvider<ThemeProvider>(
-          create: (context)=>ThemeProvider()..loadTheme(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider<ThemeProvider>(
+              create: (context) => ThemeProvider()..loadTheme(),
+            ),
+          ],
           child: Consumer<ThemeProvider>(
             builder: (context,themeProvider,_)=>MaterialApp.router(
               routerConfig: appRouter,

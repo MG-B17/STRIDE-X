@@ -28,6 +28,8 @@ dependencies:
   flutter_localization:
   #A wrapper around InheritedWidget to make them easier to use and more reusable
   provider: ^6.1.5+1
+  flutter_bloc: ^9.1.1
+  path: ^1.9.1
   #An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
   flutter_svg: ^2.2.4
   #Flutter plugin for reading and writing simple key-value pairs. Wraps NSUserDefaults on iOS and SharedPreferences on Android
@@ -50,6 +52,10 @@ dependencies:
   share_plus: 
   #A reactive functional programming library for Dart, based on Observables, to make it easier to work with asynchronous data streams.
   rxdart:
+  #A Flutter plugin for querying and requesting permissions on Android and iOS.
+  permission_handler: ^11.3.1
+  #A Flutter plugin for displaying and controlling Lottie animations.
+  lottie: 
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +69,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/images/
+    - assets/lottie/
   
   fonts:
     - family: Manrope
