@@ -6,8 +6,9 @@ import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 
 class ActiveTimeCard extends StatelessWidget {
+  final String activeTime;
   final String iconPath;
-  const ActiveTimeCard({super.key, required this.iconPath});
+  const ActiveTimeCard({super.key, required this.iconPath, required this.activeTime});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class ActiveTimeCard extends StatelessWidget {
               ),
               const VerticalSpacingWidget(value: 4),
               Text(
-                AppStrings.defaultActiveTime,
+                activeTime,
                 style: context.textTheme.headlineMedium?.copyWith(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.w800,

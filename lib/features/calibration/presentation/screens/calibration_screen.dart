@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/di/injection.dart' as di;
-import 'package:stridex/core/utils/extentions.dart';
+import 'package:stridex/core/widgets/stride_card.dart';
 import 'package:stridex/features/calibration/presentation/controller/calibration_states.dart';
 import 'package:stridex/features/calibration/presentation/controller/calibration_cubit.dart';
 import 'package:stridex/features/calibration/presentation/widgets/calibration_success_button.dart';
@@ -36,13 +36,7 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
             children: [
               const StrideCalibrationWidget(),
               SizedBox(height: 16.h),
-              Container(
-                padding: EdgeInsets.all(24.w),
-                decoration: BoxDecoration(
-                  color:context.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(color: context.colorScheme.outlineVariant),
-                ),
+              StrideCard(
                 child: BlocConsumer<CalibrationCubit, CalibrationState>(
                   listener: (context, state) {
                     if (state is CalibrationFailure) {

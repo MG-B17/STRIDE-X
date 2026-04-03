@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
+import 'package:stridex/features/home/presentation/controllers/step_counter_state.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
 import 'package:stridex/core/constant/app_strings.dart';
@@ -28,32 +31,64 @@ class HomeScreen extends StatelessWidget {
               const VerticalSpacingWidget(value: 16),
               const MotivationalTextWidget(),
               const VerticalSpacingWidget(value: 28),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Row(
-                  children: [
-                    const Expanded(
-                      child: HomeStatCard(
-                        iconPath: 'assets/svg/cal_icon.svg',
-                        value: '342',
-                        label: AppStrings.kcalBurned,
-                      ),
+              BlocBuilder<StepController, StepCounterState>(
+                builder: (context, state) {
+                  String calValue = '0';
+                  String kmValue = '0.00';
+                  
+                  if (state is Loaded) {
+                    calValue = state.calories.toStringAsFixed(0);
+                    kmValue = state.distance.toStringAsFixed(2);
+                  }
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: HomeStatCard(
+                            iconPath: 'assets/svg/cal_icon.svg',
+                            value: calValue,
+                            label: AppStrings.kcalBurned,
+                          ),
+                        ),
+                        const HorizantilSpacingWidget(value: 12),
+                        Expanded(
+                          child: HomeStatCard(
+                            iconPath: 'assets/svg/km_icon.svg',
+                            value: kmValue,
+                            label: AppStrings.kmDistance,
+                          ),
+                        ),
+                      ],
                     ),
-                    const HorizantilSpacingWidget(value: 12),
-                    const Expanded(
-                      child: HomeStatCard(
-                        iconPath: 'assets/svg/km_icon.svg',
-                        value: '5.2',
-                        label: AppStrings.kmDistance,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
               const VerticalSpacingWidget(value: 12),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: const ActiveTimeCard(iconPath: 'assets/svg/timer_icon.svg'),
+              BlocBuilder<StepController, StepCounterState>(
+                builder: (context, state) {
+                  String activeTimeString = '0m';
+                  if (state is Loaded) {
+                    final int totalMinutes = state.activeTime;
+                    if (totalMinutes < 1) {
+                      activeTimeString = '0m';
+                    } else if (totalMinutes < 60) {
+                      activeTimeString = '${totalMinutes}m';
+                    } else {
+                      final int h = totalMinutes ~/ 60;
+                      final int m = totalMinutes % 60;
+                      activeTimeString = '${h}h ${m}m';
+                    }
+                  }
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: ActiveTimeCard(
+                      iconPath: 'assets/svg/timer_icon.svg',
+                      activeTime: activeTimeString,
+                    ),
+                  );
+                },
               ),
               const VerticalSpacingWidget(value: 28),
               Padding(

@@ -11,7 +11,7 @@ import 'package:stridex/features/profile/presentation/screens/profile_screen.dar
 import 'package:stridex/features/splash/splash_screen.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: "/premission",
+  initialLocation: "/",
   routes: [
     GoRoute(
       path: "/",

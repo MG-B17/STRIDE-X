@@ -1,12 +1,12 @@
 import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/utils/cache_helper.dart';
 
-abstract class BaslineLocalData {
+abstract class BaselineLocalData {
   Future<int> getBaseline();
   Future<void> saveBaseline({required int steps});
 }
 
-class BaslineLocalDataImpl implements BaslineLocalData {
+class BaselineLocalDataImpl implements BaselineLocalData {
   @override
   Future<int> getBaseline() async {
     return CacheHelper.getData(key: AppKeys.baselineStep) ?? 0;

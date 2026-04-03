@@ -8,6 +8,7 @@ import 'package:stridex/features/profile/presentation/widgets/profile_header_wid
 import 'package:stridex/core/widgets/section_header_widget.dart';
 import 'package:stridex/features/profile/presentation/widgets/settings_action_button.dart';
 import 'package:stridex/features/profile/presentation/widgets/sign_out_section.dart';
+import 'package:stridex/features/profile/presentation/widgets/stride_accurate_widget.dart';
 import 'package:stridex/features/profile/presentation/widgets/theme_selection_card.dart';
 import 'package:stridex/features/profile/presentation/widgets/units_toggle_card.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
@@ -32,6 +33,8 @@ class ProfileScreen extends StatelessWidget {
                 trailingText: AppStrings.personalization,
               ),
               const DailyGoalCard(steps: "10000",),
+              VerticalSpacingWidget(value: 16),
+              const StrideAccurateWidget(),
               VerticalSpacingWidget(value: 16),
               const UnitsToggleCard(),
               // Notifications

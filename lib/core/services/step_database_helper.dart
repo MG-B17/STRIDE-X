@@ -24,7 +24,7 @@ class StepDatabaseHelper implements DatabaseService {
 
     _database = await openDatabase(
       path,
-      version: 1,
+      version: 3,
       onOpen: (strideXDB){
       },
       onCreate: (db, version) async {
@@ -33,9 +33,21 @@ class StepDatabaseHelper implements DatabaseService {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             steps_count INTEGER,
             goal_reached_percentage REAL,
+            calories REAL DEFAULT 0.0,
+            distance REAL DEFAULT 0.0,
+            active_time_seconds INTEGER DEFAULT 0,
             date TEXT
           )
         ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('ALTER TABLE steps ADD COLUMN calories REAL DEFAULT 0.0');
+          await db.execute('ALTER TABLE steps ADD COLUMN distance REAL DEFAULT 0.0');
+        }
+        if (oldVersion < 3) {
+          await db.execute('ALTER TABLE steps ADD COLUMN active_time_seconds INTEGER DEFAULT 0');
+        }
       },
     );
   }

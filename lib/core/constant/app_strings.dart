@@ -101,7 +101,8 @@ class AppStrings {
   static const String englishArabic = 'English / Arabic';
   static const String signOut = 'SIGN OUT';
   static const String appVersion = 'StrideX v2.4.0 • Build 892';
-
+  static const String recalibrateTracker = 'Recalibrate Tracker';
+  static const String recalibrateTrackerDesc = 'Optimize step detection to match your authentic natural stride.';
   // History Screen
   static const String dayStreak = 'DAY STREAK';
   static const String longest = 'LONGEST';

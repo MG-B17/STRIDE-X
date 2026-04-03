@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:stridex/core/constant/route_constant.dart';
 import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/core/utils/extentions.dart';
-import 'package:stridex/core/utils/premission_helper.dart';
 import 'package:stridex/core/widgets/app_button.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/features/onboarding/presentation/widgets/premission_widget/background_decoration.dart';
@@ -52,25 +51,9 @@ class _PremissionScreenState extends State<PremissionScreen> {
                   ),
                   // Allow button
                   AppButton(
-                    onNext: () async {
-                      if (!mounted) return;
-                      final isGranted =
-                          await PermissionHelper.handleActivityRecognitionPermission();
-                      if (isGranted) {
-                        context.goNamed(
-                          AppRouteConstant.calibrationScreenRoute,
-                        );
-                      } else {
-                        // ignore: use_build_context_synchronously
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Permission is required to count steps',
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                    onNext: ()=> context.goNamed(
+                      AppRouteConstant.calibrationScreenRoute,
+                    ),
                     text: AppStrings.allowPermissions,
                   ),
 
