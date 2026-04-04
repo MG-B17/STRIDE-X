@@ -24,9 +24,8 @@ class StepDatabaseHelper implements DatabaseService {
 
     _database = await openDatabase(
       path,
-      version: 3,
-      onOpen: (strideXDB){
-      },
+      version: 5,
+      onOpen: (strideXDB) {},
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE steps(
@@ -39,39 +38,119 @@ class StepDatabaseHelper implements DatabaseService {
             date TEXT
           )
         ''');
+        await db.execute('''
+          CREATE TABLE user_data(
+            id INTEGER PRIMARY KEY,
+            height REAL,
+            weight REAL,
+            gender TEXT,
+            strideLengthCm REAL
+          )
+        ''');
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
-          await db.execute('ALTER TABLE steps ADD COLUMN calories REAL DEFAULT 0.0');
-          await db.execute('ALTER TABLE steps ADD COLUMN distance REAL DEFAULT 0.0');
+          await db.execute(
+            'ALTER TABLE steps ADD COLUMN calories REAL DEFAULT 0.0',
+          );
+          await db.execute(
+            'ALTER TABLE steps ADD COLUMN distance REAL DEFAULT 0.0',
+          );
         }
         if (oldVersion < 3) {
-          await db.execute('ALTER TABLE steps ADD COLUMN active_time_seconds INTEGER DEFAULT 0');
+          await db.execute(
+            'ALTER TABLE steps ADD COLUMN active_time_seconds INTEGER DEFAULT 0',
+          );
+        }
+        if (oldVersion < 4) {
+          await db.execute('''
+            CREATE TABLE user_data(
+              id INTEGER PRIMARY KEY,
+              height REAL,
+              weight REAL,
+              gender TEXT,
+              strideLengthCm REAL
+            )
+          ''');
+        }
+        if (oldVersion < 5 && oldVersion >= 4) {
+          // If already on 4 (from previous broken build), we need to add the column.
+          // Version 3 users also get it from the onCreate if they start fresh,
+          // but if they were on 4, they already had the table but without the column.
+          await db.execute(
+            'ALTER TABLE user_data ADD COLUMN strideLengthCm REAL DEFAULT 0.0',
+          );
         }
       },
     );
   }
 
-  @override
-  Future<int> insert(String table, Map<String, dynamic> data) async {
+  Future<void> saveUserData(
+    double height,
+    double weight,
+    String gender,
+    double strideLengthCm,
+  ) async {
     final db = await database;
-    return await db.insert(table, data, conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert('user_data', {
+      'id': 1,
+      'height': height,
+      'weight': weight,
+      'gender': gender,
+      'strideLengthCm': strideLengthCm,
+    }, conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<Map<String, dynamic>?> getUserData() async {
+    final db = await database;
+    final List<Map<String, dynamic>> results = await db.query(
+      'user_data',
+      where: 'id = ?',
+      whereArgs: [1],
+    );
+    if (results.isNotEmpty) {
+      return results.first;
+    }
+    return null;
   }
 
   @override
-  Future<List<Map<String, dynamic>>> query(String table, {String? where, List<dynamic>? whereArgs}) async {
+  Future<int> insert(String table, Map<String, dynamic> data) async {
+    final db = await database;
+    return await db.insert(
+      table,
+      data,
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> query(
+    String table, {
+    String? where,
+    List<dynamic>? whereArgs,
+  }) async {
     final db = await database;
     return await db.query(table, where: where, whereArgs: whereArgs);
   }
 
   @override
-  Future<int> update(String table, Map<String, dynamic> data, {String? where, List<dynamic>? whereArgs}) async {
+  Future<int> update(
+    String table,
+    Map<String, dynamic> data, {
+    String? where,
+    List<dynamic>? whereArgs,
+  }) async {
     final db = await database;
     return await db.update(table, data, where: where, whereArgs: whereArgs);
   }
 
   @override
-  Future<int> delete(String table, {String? where, List<dynamic>? whereArgs}) async {
+  Future<int> delete(
+    String table, {
+    String? where,
+    List<dynamic>? whereArgs,
+  }) async {
     final db = await database;
     return await db.delete(table, where: where, whereArgs: whereArgs);
   }

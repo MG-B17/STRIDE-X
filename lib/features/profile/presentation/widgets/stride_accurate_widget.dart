@@ -14,7 +14,7 @@ class StrideAccurateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(AppRouteConstant.calibrationScreenRoute);
+        context.pushNamed(AppRouteConstant.userDataScreenRoute);
       },
       child: StrideCard(
         child: Padding(

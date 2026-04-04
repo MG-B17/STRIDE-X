@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
+import 'package:stridex/features/calibration/domain/entity/user_physical_data.dart';
 
 abstract class StepCounterState extends Equatable {
   const StepCounterState();
 
   @override
   List<Object?> get props => [];
-} 
+}
 
 class Initial extends StepCounterState {
   const Initial();
-} 
+}
 
 class Loading extends StepCounterState {
   const Loading();
@@ -22,6 +23,7 @@ class Loaded extends StepCounterState {
   final double calories;
   final double distance;
   final int activeTime;
+  final UserPhysicalData? userPhysicalData;
 
   const Loaded({
     required this.dailyStep,
@@ -30,6 +32,7 @@ class Loaded extends StepCounterState {
     required this.calories,
     required this.distance,
     required this.activeTime,
+    this.userPhysicalData,
   });
 
   @override
@@ -40,6 +43,7 @@ class Loaded extends StepCounterState {
         calories,
         distance,
         activeTime,
+        userPhysicalData,
       ];
 }
 

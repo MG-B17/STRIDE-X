@@ -5,5 +5,5 @@ class AppKeys {
   static const String todayDate = "Today Date";
   static const String baselineStep = "Baseline Step";
   static const String stepGoal = "Step Goal";
-   static const String calibrationFactorKey = 'calibration_factor';
+   static const String calibrationStepCorrection = 'calibration_factor';
 }

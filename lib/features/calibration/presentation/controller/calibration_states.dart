@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:stridex/core/constant/stride_enum.dart';
 
 abstract class CalibrationState extends Equatable {
   const CalibrationState();
@@ -49,4 +50,12 @@ class CalibrationStreamFail extends CalibrationState {
   
   @override
   List<Object> get props => [message];
+}
+
+class SelectGender extends CalibrationState {
+  final Gender gender ;
+  const SelectGender({required this.gender});
+
+  @override
+  List<Object> get props => [gender];
 }

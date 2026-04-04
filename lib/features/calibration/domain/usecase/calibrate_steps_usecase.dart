@@ -7,20 +7,21 @@ abstract class CalibrateStepsUseCase {
   });
 }
 
-
 class CalibrateStepsUseCaseImpl implements CalibrateStepsUseCase {
   @override
   Future<CalibrationFactorEntity> execute({
     required int realSteps,
     required int detectedSteps,
   }) async {
-    if (detectedSteps <= 0) return CalibrationFactorEntity(factor: 1.0);
 
-    double factor = realSteps / detectedSteps;
 
-    // clamp factor for safety
-    factor = factor.clamp(0.5, 2.0);
+    if (detectedSteps <= 0) return CalibrationFactorEntity(stepCorrection: 1.0);
 
-    return CalibrationFactorEntity(factor: factor);
+    double stepCorrection = realSteps / detectedSteps ;
+
+    stepCorrection = stepCorrection.clamp(0.5, 2.0);
+
+    return CalibrationFactorEntity(stepCorrection: stepCorrection);
   }
+
 }

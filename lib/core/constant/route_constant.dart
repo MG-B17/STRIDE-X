@@ -8,4 +8,5 @@ class AppRouteConstant {
   static String homeScreenRoute = "home";
   static String profileScreenRoute = "profile";
   static String calibrationScreenRoute = "calibration";
+  static String userDataScreenRoute = "userdata";
 }

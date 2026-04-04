@@ -1,4 +1,4 @@
 class CalibrationFactorEntity {
-  final double factor;
-  const CalibrationFactorEntity({required this.factor});
+  final double stepCorrection;
+  const CalibrationFactorEntity({required this.stepCorrection});
 }

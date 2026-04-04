@@ -52,7 +52,7 @@ class _PremissionScreenState extends State<PremissionScreen> {
                   // Allow button
                   AppButton(
                     onNext: ()=> context.goNamed(
-                      AppRouteConstant.calibrationScreenRoute,
+                      AppRouteConstant.userDataScreenRoute,
                     ),
                     text: AppStrings.allowPermissions,
                   ),
@@ -60,7 +60,7 @@ class _PremissionScreenState extends State<PremissionScreen> {
                   // Maybe later
                   GestureDetector(
                     onTap: () => context.goNamed(
-                      AppRouteConstant.calibrationScreenRoute,
+                      AppRouteConstant.userDataScreenRoute,
                     ),
                     child: Center(
                       child: Text(
