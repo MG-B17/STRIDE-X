@@ -9,15 +9,14 @@ class PrecisionGuaranteedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:EdgeInsets.only(top: 24.h,bottom: 40.h),
+      padding: EdgeInsets.only(top: 24.h, bottom: 40.h),
       child: Center(
         child: Text(
           AppStrings.precisionGuaranteed,
           textAlign: TextAlign.center,
           style: context.textTheme.labelSmall?.copyWith(
-            color: context.colorScheme.onSurfaceVariant,
-            letterSpacing: 2.0,
-            fontSize: 10.sp,
+            letterSpacing: 1.2,
+            color: context.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
       ),

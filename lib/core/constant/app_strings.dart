@@ -11,11 +11,14 @@ class AppStrings {
 
   // Permissions
   static const String permissionTitle = 'Give StrideX a\nBoost.';
-  static const String permissionSubtitle = 'To track your steps accurately and keep you motivated, we need access to your activity and notifications.';
+  static const String permissionSubtitle =
+      'To track your steps accurately and keep you motivated, we need access to your activity and notifications.';
   static const String physicalActivityTitle = 'Physical Activity';
-  static const String physicalActivityDesc = 'Sync your real-time step data and movement patterns for precise tracking.';
+  static const String physicalActivityDesc =
+      'Sync your real-time step data and movement patterns for precise tracking.';
   static const String smartAlertsTitle = 'Smart Alerts';
-  static const String smartAlertsDesc = 'Receive daily milestones, workout reminders, and kinetic coaching tips.';
+  static const String smartAlertsDesc =
+      'Receive daily milestones, workout reminders, and kinetic coaching tips.';
   static const String allowPermissions = 'Allow Permissions';
   static const String maybeLater = 'Maybe later';
   static const String encryptedData = 'END-TO-END ENCRYPTED DATA';
@@ -47,12 +50,20 @@ class AppStrings {
   static const String analyticsTitle = 'Analytics';
   static const String toggleWeekly = 'Weekly';
   static const String toggleMonthly = 'Monthly';
-  
+
   static const String stepPerformance = 'STEP PERFORMANCE';
   static const String defaultStepIncrease = '+18%';
   static const String defaultAvgSteps = '9,357';
   static const String avgPerDay = 'avg/day';
-  static const List<String> weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+  static const List<String> weekDays = [
+    'MON',
+    'TUE',
+    'WED',
+    'THU',
+    'FRI',
+    'SAT',
+    'SUN',
+  ];
 
   static const String smartInsights = 'Smart Insights';
   static const String insightWalked = 'You walked ';
@@ -61,7 +72,8 @@ class AppStrings {
 
   static const String peakActivity = 'Peak Activity';
   static const String peakDay = 'Friday ';
-  static const String peakRest = 'was your most active day with 12,300 steps recorded.';
+  static const String peakRest =
+      'was your most active day with 12,300 steps recorded.';
 
   static const String totalWeeklySteps = 'TOTAL WEEKLY STEPS';
   static const String defaultTotalSteps = '65.4k';
@@ -81,7 +93,8 @@ class AppStrings {
 
   // Profile Screen
   static const String level5Walker = 'Level 5 Walker';
-  static const String profileBio = 'Chasing a 365-day movement streak. Precision in every stride.';
+  static const String profileBio =
+      'Chasing a 365-day movement streak. Precision in every stride.';
   static const String accountSettings = 'Account Settings';
   static const String personalization = 'PERSONALIZATION';
   static const String dailyGoal = 'DAILY GOAL';
@@ -92,7 +105,8 @@ class AppStrings {
   static const String dailyReminder = 'Daily Reminder';
   static const String dailyReminderDesc = 'Scheduled for 8:00 AM daily';
   static const String streakAlerts = 'Streak Alerts';
-  static const String streakAlertsDesc = 'Get notified before losing your progress';
+  static const String streakAlertsDesc =
+      'Get notified before losing your progress';
   static const String visualTheme = 'VISUAL THEME';
   static const String lightTheme = 'Light';
   static const String darkTheme = 'Dark';
@@ -102,7 +116,8 @@ class AppStrings {
   static const String signOut = 'SIGN OUT';
   static const String appVersion = 'StrideX v2.4.0 • Build 892';
   static const String recalibrateTracker = 'Recalibrate Tracker';
-  static const String recalibrateTrackerDesc = 'Optimize step detection to match your authentic natural stride.';
+  static const String recalibrateTrackerDesc =
+      'Optimize step detection to match your authentic natural stride.';
   // History Screen
   static const String dayStreak = 'DAY STREAK';
   static const String longest = 'LONGEST';
@@ -121,30 +136,40 @@ class AppStrings {
   static const String eighteenDaysRemaining = '18/30 Days Remaining';
   static const String legendary = 'LEGENDARY';
   static const String summitSeeker = 'Summit Seeker';
-  static const String summitSeekerDesc = 'Complete 50 incline sessions to unlock this title.';
+  static const String summitSeekerDesc =
+      'Complete 50 incline sessions to unlock this title.';
   static const String historyGrowthDesc = 'GROWTH';
   static const String pushYourLimits = 'Push your limits.';
   static const String newChallenges = 'New challenges drop in 4 hours.';
 
   // Calibration Screen
+  static const String height = "Height";
+  static const String weight = "Weight";
+  static const String cm = "CM";
+  static const String kg = "KG";
   static const String calibrationTitle = 'Calibration';
   static const String strideCalibration = 'Stride Calibration';
   static const String calibrateWithWalk = 'Calibrate with Walk';
-static const String calibrateWalkDesc =
-    'Walk exactly 10 steps at your normal pace.'
-    'Count each step carefully for best accuracy.\n'
-    'Then tap "Complete Calibration" to finish.';
+  static const String calibrateWalkDesc =
+      'Walk exactly 10 steps at your normal pace ,'
+      'for best accuracy.\n'
+      'Then tap "Complete Calibration" to finish.';
 
-static const String calibratingStride =
-    "Calibrating...\n"
-    "Walk naturally and track your steps precisely.";
-  static const String startCalibrationWalk = 'START CALIBRATION WALK';
+  static const String calibratingStride =
+      "Calibrating...\n"
+      "Walk naturally and track your steps precisely.";
+  static const String startCalibrationWalk = 'START WALK';
   static const String manualOverride = 'MANUAL OVERRIDE';
   static const String completeCalibration = 'Complete Calibration';
-  static const String calibrationWalkAround = 'Make sure to walk around for a few seconds to allow the app to detect your steps accurately.';
-  static const String completeCalibrationFirst = 'Please complete the calibration process before proceeding.';
+  static const String calibrationWalkAround =
+      'Make sure to walk around for a few seconds to allow the app to detect your steps accurately.';
+  static const String completeCalibrationFirst =
+      'Please complete the calibration process before proceeding.';
   static const String calibrationFail = 'Failed to calibrate';
-  static const String calibrationSuccess ="Calibration successful! You can now proceed.";
+  static const String calibrationSuccess =
+      "Calibration successful! You can now proceed.";
   static const String proceedToHomeScreen = "Proceed to Home Screen";
-  static const String precisionGuaranteed = 'PRECISION GUARANTEED BY STRIDEX\nENGINE';
+  static const String precisionGuaranteed =
+      'PRECISION GUARANTEED BY STRIDEX\nENGINE';
+  static const String biologicalGender = 'BIOLOGICAL GENDER';
 }

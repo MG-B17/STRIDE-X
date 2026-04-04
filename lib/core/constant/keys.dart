@@ -7,4 +7,3 @@ class AppKeys {
   static const String stepGoal = "Step Goal";
    static const String calibrationFactorKey = 'calibration_factor';
 }
-enum AppMode {light , dark , system}

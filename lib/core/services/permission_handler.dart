@@ -1,17 +1,5 @@
 import 'package:permission_handler/permission_handler.dart';
-
-enum AppPermission {
-  activityRecognition,
-  location,
-  notification,
-}
-
-enum PermissionStatusResult {
-  granted,
-  denied,
-  permanentlyDenied,
-  restricted,
-}  
+import 'package:stridex/core/constant/stride_enum.dart';
 
 abstract class PermissionService {
   Future<PermissionStatusResult> request();

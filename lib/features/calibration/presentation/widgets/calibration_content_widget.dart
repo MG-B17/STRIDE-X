@@ -5,7 +5,7 @@ import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/widgets/app_button.dart';
 
 class CalibrationContentWidget extends StatelessWidget {
-  const CalibrationContentWidget({super.key,required this.onNext});
+  const CalibrationContentWidget({super.key, required this.onNext});
   final VoidCallback onNext;
 
   @override
@@ -29,12 +29,15 @@ class CalibrationContentWidget extends StatelessWidget {
             height: 80.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: context.colorScheme.secondary, width: 4),
+              border: Border.all(
+                color: context.colorScheme.secondary,
+                width: 4,
+              ),
             ),
             child: Icon(
               Icons.directions_walk,
               color: context.colorScheme.primary,
-              size: 32,
+              size: 32.sp,
             ),
           ),
         ),
@@ -51,10 +54,9 @@ class CalibrationContentWidget extends StatelessWidget {
         Text(
           AppStrings.calibrateWalkDesc,
           textAlign: TextAlign.center,
-          style: context.textTheme.bodyMedium?.copyWith(
-            color: context.colorScheme.onSurfaceVariant,
-            height: 1.5,
-            fontSize: 13.sp,
+          style: context.textTheme.labelSmall?.copyWith(
+            letterSpacing: 1.2,
+            color: context.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         SizedBox(height: 24.h),
