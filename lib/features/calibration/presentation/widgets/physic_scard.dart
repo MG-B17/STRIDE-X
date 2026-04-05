@@ -11,20 +11,24 @@ class PhysicSCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = CalibrationCubit.get(context);
     
-    return Row(
+    return Column(
       children: [
-        TextFormWidget(
-          icon: Icons.straighten_rounded,
-          label: AppStrings.height,
-          controller: cubit.heightController,
-          unit: AppStrings.cm,
-        ),
-        HorizantilSpacingWidget(value: 12),
-        TextFormWidget(
-          icon: Icons.monitor_weight_rounded,
-          label: AppStrings.weight,
-          controller: cubit.weightController,
-          unit: AppStrings.kg,
+        Row(
+          children: [
+            TextFormWidget(
+              icon: Icons.straighten_rounded,
+              label: AppStrings.height,
+              controller: cubit.heightController,
+              unit: AppStrings.cm,
+            ),
+            HorizantilSpacingWidget(value: 12),
+            TextFormWidget(
+              icon: Icons.monitor_weight_rounded,
+              label: AppStrings.weight,
+              controller: cubit.weightController,
+              unit: AppStrings.kg,
+            ),
+          ],
         ),
       ],
     );

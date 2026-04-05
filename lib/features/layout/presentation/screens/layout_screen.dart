@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
+import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/di/injection.dart' as di;
-import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
-import 'package:stridex/features/home/presentation/screens/home_screen.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
+import 'package:stridex/features/step_counter/presentation/screens/home_screen.dart';
 import 'package:stridex/features/analytics/presentation/screens/analytics_screen.dart';
 import 'package:stridex/features/history/presentation/screens/history_screen.dart';
 import 'package:stridex/features/profile/presentation/screens/profile_screen.dart';
@@ -18,6 +19,18 @@ class LayoutScreen extends StatefulWidget {
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+   _loadData() ;
+  }
+
+
+Future<void> _loadData() async {
+    await CalibrationData.initCalibrationData();
+  }
+
   int _currentIndex = 1;
 
   final List<Widget> _screens = [
@@ -32,7 +45,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     final theme = Theme.of(context);
 
     return BlocProvider(
-      create: (context) =>di.init<StepController>()..startListening(),
+      create: (context) =>di.init<StepCounterCubit>()..startStepsStream(),
       child: Scaffold(
         body: _screens[_currentIndex],
         bottomNavigationBar: Container(

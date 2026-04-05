@@ -27,6 +27,7 @@ class CalibrationCubit extends Cubit<CalibrationState> {
   
   final TextEditingController heightController = TextEditingController(text: '170');
   final TextEditingController weightController = TextEditingController(text: '70');
+  final TextEditingController stepGoalController = TextEditingController(text: '2000');
 
   static CalibrationCubit get(context) => BlocProvider.of(context);
 
@@ -48,12 +49,13 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     double? height,
     double? weight,
     Gender? gender,
+    int? stepGoal,
   }) async {
     await saveUserPhysicalDataUseCase(UserPhysicalData(
       height: height ?? double.tryParse(heightController.text) ?? 170.0,
       weight: weight ?? double.tryParse(weightController.text) ?? 70.0,
       gender: gender ?? selectedGender,
-
+      stepGoal: stepGoal ?? int.tryParse(stepGoalController.text) ?? 2000,
     ));
   }
 
@@ -123,6 +125,7 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     resetCalibration();
     heightController.dispose();
     weightController.dispose();
+    stepGoalController.dispose();
     return super.close();
   }
 }

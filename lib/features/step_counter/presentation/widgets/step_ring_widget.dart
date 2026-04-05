@@ -6,8 +6,8 @@ import 'package:stridex/core/utils/extentions.dart';
 import 'package:stridex/core/theme/app_color.dart';
 import 'dart:math' as math;
 import 'package:stridex/core/widgets/spacing_widget.dart';
-import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
-import 'package:stridex/features/home/presentation/controllers/step_counter_state.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
 
 class StepRingWidget extends StatelessWidget {
   const StepRingWidget({super.key});
@@ -16,7 +16,7 @@ class StepRingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
 
-    return BlocConsumer<StepController, StepCounterState>(
+    return BlocConsumer<StepCounterCubit, StepCounterState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is Loaded) {
@@ -57,7 +57,7 @@ class StepRingWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
-                        '% ${AppStrings.complete}',
+                        '${(state.progressStep * 100).toInt()}% ${AppStrings.complete}',
                         style: context.textTheme.labelSmall?.copyWith(
                           fontSize: 9.sp,
                           fontWeight: FontWeight.w800,

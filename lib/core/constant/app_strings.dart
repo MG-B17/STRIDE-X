@@ -147,6 +147,8 @@ class AppStrings {
   static const String weight = "Weight";
   static const String cm = "CM";
   static const String kg = "KG";
+  static const String stepGoal = 'Step Goal';
+  static const String stepsUnit = 'Steps';
   static const String calibrationTitle = 'Calibration';
   static const String strideCalibration = 'Stride Calibration';
   static const String calibrateWithWalk = 'Calibrate with Walk';

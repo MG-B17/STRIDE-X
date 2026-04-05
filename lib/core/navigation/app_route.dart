@@ -6,7 +6,7 @@ import 'package:stridex/features/analytics/presentation/screens/analytics_screen
 import 'package:stridex/features/calibration/presentation/controller/calibration_cubit.dart';
 import 'package:stridex/features/calibration/presentation/screens/user_data_screen.dart';
 import 'package:stridex/features/history/presentation/screens/history_screen.dart';
-import 'package:stridex/features/home/presentation/screens/home_screen.dart';
+import 'package:stridex/features/step_counter/presentation/screens/home_screen.dart';
 import 'package:stridex/features/layout/presentation/screens/layout_screen.dart';
 import 'package:stridex/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:stridex/features/onboarding/presentation/screens/premission_screen.dart';

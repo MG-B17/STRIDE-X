@@ -9,7 +9,7 @@ class CalibrationRepositoryImpl implements CalibrationRepository {
 
   @override
   Future<void> saveStepCorrection({required double stepCorrection}) async {
-    await localData.saveStepCorrection(stepCorrection:stepCorrection) ;
+    await localData.saveStepCorrection(stepCorrection: stepCorrection);
   }
 
   @override
@@ -24,20 +24,31 @@ class CalibrationRepositoryImpl implements CalibrationRepository {
       userData.weight,
       userData.gender.name,
       userData.strideLengthCm!,
+      userData.stepGoal,
     );
   }
 
   @override
-  Future<UserPhysicalData?> getUserPhysicalData() async {
+  Future<UserPhysicalData> getUserPhysicalData() async {
     final map = await localData.getUserPhysicalData();
-    if (map != null) {
-      return UserPhysicalData(
-        strideLengthCm:map["strideLengthCm"] ,
-        height: map['height'],
-        weight: map['weight'],
-        gender: Gender.values.byName(map['gender']),
-      );
+
+    if (map == null) {
+      throw Exception("User physical data not found");
     }
-    return null;
+
+    final genderStr = map['gender'] as String?;
+
+    final gender = Gender.values.firstWhere(
+      (e) => e.name == genderStr,
+      orElse: () => Gender.male,
+    );
+
+    return UserPhysicalData(
+      strideLengthCm: map["strideLengthCm"] ?? 70,
+      height: map['height'] ?? 170,
+      weight: map['weight'] ?? 70,
+      gender: gender,
+      stepGoal: map['stepGoal'] ?? 2000,
+    );
   }
 }

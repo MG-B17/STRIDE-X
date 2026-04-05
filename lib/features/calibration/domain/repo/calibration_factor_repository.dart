@@ -5,5 +5,5 @@ abstract class CalibrationRepository {
   Future<double> getFactor();
   
   Future<void> saveUserPhysicalData(UserPhysicalData userData);
-  Future<UserPhysicalData?> getUserPhysicalData();
+  Future<UserPhysicalData> getUserPhysicalData();
 }

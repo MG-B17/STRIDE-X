@@ -7,4 +7,5 @@ class ErrorStrings {
   static const String permissionDeniedError = 'Required permissions were denied.';
   static const String calibrationStreamError = 'Failed to get calibration Steps';
   static const String invalidStepCount = 'Please ensure you are taking steps.';
+  static const String failToAccessDate = 'Failed to get yyour Calender Data';
 }

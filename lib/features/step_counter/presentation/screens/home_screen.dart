@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/features/home/presentation/controllers/step_controller.dart';
-import 'package:stridex/features/home/presentation/controllers/step_counter_state.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
 import 'package:stridex/core/constant/app_strings.dart';
-import 'package:stridex/features/home/presentation/widgets/step_ring_widget.dart';
-import 'package:stridex/features/home/presentation/widgets/motivational_text_widget.dart';
-import 'package:stridex/features/home/presentation/widgets/home_stat_card.dart';
-import 'package:stridex/features/home/presentation/widgets/active_time_card.dart';
-import 'package:stridex/features/home/presentation/widgets/weekly_progress_widget.dart';
-import 'package:stridex/features/home/presentation/widgets/latest_workout_card.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/step_ring_widget.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/motivational_text_widget.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/home_stat_card.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/active_time_card.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/weekly_progress_widget.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/latest_workout_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               const VerticalSpacingWidget(value: 16),
               const MotivationalTextWidget(),
               const VerticalSpacingWidget(value: 28),
-              BlocBuilder<StepController, StepCounterState>(
+              BlocBuilder<StepCounterCubit, StepCounterState>(
                 builder: (context, state) {
                   String calValue = '0';
                   String kmValue = '0.00';
@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const VerticalSpacingWidget(value: 12),
-              BlocBuilder<StepController, StepCounterState>(
+              BlocBuilder<StepCounterCubit, StepCounterState>(
                 builder: (context, state) {
                   String activeTimeString = '0m';
                   if (state is Loaded) {

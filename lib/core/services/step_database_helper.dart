@@ -24,7 +24,7 @@ class StepDatabaseHelper implements DatabaseService {
 
     _database = await openDatabase(
       path,
-      version: 5,
+      version: 1,
       onOpen: (strideXDB) {},
       onCreate: (db, version) async {
         await db.execute('''
@@ -44,43 +44,50 @@ class StepDatabaseHelper implements DatabaseService {
             height REAL,
             weight REAL,
             gender TEXT,
-            strideLengthCm REAL
+            strideLengthCm REAL,
+            stepGoal INTEGER 
           )
         ''');
       },
       onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) {
-          await db.execute(
-            'ALTER TABLE steps ADD COLUMN calories REAL DEFAULT 0.0',
-          );
-          await db.execute(
-            'ALTER TABLE steps ADD COLUMN distance REAL DEFAULT 0.0',
-          );
-        }
-        if (oldVersion < 3) {
-          await db.execute(
-            'ALTER TABLE steps ADD COLUMN active_time_seconds INTEGER DEFAULT 0',
-          );
-        }
-        if (oldVersion < 4) {
-          await db.execute('''
-            CREATE TABLE user_data(
-              id INTEGER PRIMARY KEY,
-              height REAL,
-              weight REAL,
-              gender TEXT,
-              strideLengthCm REAL
-            )
-          ''');
-        }
-        if (oldVersion < 5 && oldVersion >= 4) {
-          // If already on 4 (from previous broken build), we need to add the column.
-          // Version 3 users also get it from the onCreate if they start fresh,
-          // but if they were on 4, they already had the table but without the column.
-          await db.execute(
-            'ALTER TABLE user_data ADD COLUMN strideLengthCm REAL DEFAULT 0.0',
-          );
-        }
+        // if (oldVersion < 2) {
+        //   await db.execute(
+        //     'ALTER TABLE steps ADD COLUMN calories REAL DEFAULT 0.0',
+        //   );
+        //   await db.execute(
+        //     'ALTER TABLE steps ADD COLUMN distance REAL DEFAULT 0.0',
+        //   );
+        // }
+        // if (oldVersion < 3) {
+        //   await db.execute(
+        //     'ALTER TABLE steps ADD COLUMN active_time_seconds INTEGER DEFAULT 0',
+        //   );
+        // }
+        // if (oldVersion < 4) {
+        //   await db.execute('''
+        //     CREATE TABLE user_data(
+        //       id INTEGER PRIMARY KEY,
+        //       height REAL,
+        //       weight REAL,
+        //       gender TEXT,
+        //       stepGoal INTEGER
+        //       strideLengthCm REAL
+        //     )
+        //   ''');
+        // }
+        // if (oldVersion < 5 && oldVersion >= 4) {
+        //   // If already on 4 (from previous broken build), we need to add the column.
+        //   // Version 3 users also get it from the onCreate if they start fresh,
+        //   // but if they were on 4, they already had the table but without the column.
+        //   await db.execute(
+        //     'ALTER TABLE user_data ADD COLUMN strideLengthCm REAL DEFAULT 0.0',
+        //   );
+        // }
+        // if (oldVersion < 6) {
+        //   await db.execute(
+        //     'ALTER TABLE user_data ADD COLUMN stepGoal INTEGER DEFAULT 2000',
+        //   );
+        // }
       },
     );
   }
@@ -90,6 +97,7 @@ class StepDatabaseHelper implements DatabaseService {
     double weight,
     String gender,
     double strideLengthCm,
+    int stepGoal,
   ) async {
     final db = await database;
     await db.insert('user_data', {
@@ -98,6 +106,7 @@ class StepDatabaseHelper implements DatabaseService {
       'weight': weight,
       'gender': gender,
       'strideLengthCm': strideLengthCm,
+      'stepGoal': stepGoal,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 

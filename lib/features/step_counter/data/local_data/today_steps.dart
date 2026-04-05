@@ -1,13 +1,13 @@
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/utils/date_helper.dart';
 
-abstract class StepCounterLocalData {
+abstract class TodayStepLocalData {
   Future<int> getTodaysteps();
+  Future<void> saveTodaySteps({required int steps});
   Future<Map<String, dynamic>> getTodayData();
-  Future<void> saveTodaySteps({required int steps, double? calories, double? distance, int? activeTime});
 }
 
-class StepCounterLocalDataImpl extends StepCounterLocalData {
+class StepCounterLocalDataImpl extends TodayStepLocalData {
   final DatabaseService databaseService;
   final DateHelper dateHelper;
 
@@ -20,6 +20,12 @@ class StepCounterLocalDataImpl extends StepCounterLocalData {
   Future<int> getTodaysteps() async {
     final data = await getTodayData();
     return data['steps_count'] as int? ?? 0;
+  }
+
+  @override
+  Future<void> saveTodaySteps({required int steps}) async {
+    final todayStr = DateTime.now().toIso8601String().split('T')[0];
+    await databaseService.insert('steps', {'steps_count': steps, 'date': todayStr});
   }
 
   @override
@@ -44,19 +50,4 @@ class StepCounterLocalDataImpl extends StepCounterLocalData {
       'date': todayStr,
     };
   }
-
-  @override
-  Future<void> saveTodaySteps({required int steps, double? calories, double? distance, int? activeTime}) async {
-    final today = await dateHelper.getTodayDate();
-    final todayStr = today.toIso8601String().split('T')[0];
-
-    await databaseService.insert('steps', {
-      'steps_count': steps,
-      'calories': calories ?? 0.0,
-      'distance': distance ?? 0.0,
-      'active_time_seconds': activeTime ?? 0,
-      'date': todayStr,
-    });
-  }
-}  
-
+}

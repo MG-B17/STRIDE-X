@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/constant/route_constant.dart';
+import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/utils/cache_helper.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool isdark = false ;
+  bool isdark = false;
   @override
   void initState() {
     super.initState();
@@ -27,11 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
           CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
 
       if (isOnboardingVisited) {
+        _loadData();
         context.goNamed(AppRouteConstant.layoutScreenRoute);
       } else {
         context.goNamed(AppRouteConstant.onboardingScreenRoute);
       }
     });
+  }
+
+  Future<void> _loadData() async {
+    await CalibrationData.initCalibrationData();
   }
 
   @override

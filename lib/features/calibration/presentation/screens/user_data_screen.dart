@@ -9,6 +9,7 @@ import 'package:stridex/features/calibration/presentation/widgets/calibration_co
 import 'package:stridex/features/calibration/presentation/widgets/gender_card.dart';
 import 'package:stridex/features/calibration/presentation/widgets/physic_scard.dart';
 import 'package:stridex/features/calibration/presentation/widgets/precision_guaranteed_text.dart';
+import 'package:stridex/features/calibration/presentation/widgets/set_step_goal_widget.dart';
 import 'package:stridex/features/calibration/presentation/widgets/stride_calibration_widget.dart';
 
 class UserDataScreen extends StatelessWidget {
@@ -32,6 +33,11 @@ class UserDataScreen extends StatelessWidget {
                 const PhysicSCard(),
                 const VerticalSpacingWidget(value: 12),
                 const GenderCard(),
+                Row(
+                  children: [
+                    const SetStepGoalWidget(),
+                  ],
+                ),
                 const VerticalSpacingWidget(value: 24),
                 const StrideCalibrationWidget(),
                 const VerticalSpacingWidget(value: 16),

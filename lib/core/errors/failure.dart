@@ -36,3 +36,7 @@ class PermissionDeniedFailure extends Failure {
 class CalibrationStreamFailure extends Failure {
   const CalibrationStreamFailure(super.message);
 }
+
+class DateFailure extends Failure{
+    const DateFailure(super.message);
+}

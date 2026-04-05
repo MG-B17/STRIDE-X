@@ -7,7 +7,7 @@ abstract class CalibrationLocalData {
   Future<void> saveStepCorrection({required double stepCorrection});
   Future<double> getFactor();
   
-  Future<void> saveUserPhysicalData(double height, double weight, String gender,double strideLengthCm);
+  Future<void> saveUserPhysicalData(double height, double weight, String gender, double strideLengthCm, int stepGoal);
   Future<Map<String, dynamic>?> getUserPhysicalData();
 }
 
@@ -27,9 +27,9 @@ class CalibrationLocalDataImpl implements CalibrationLocalData {
   }
 
   @override
-  Future<void> saveUserPhysicalData(double height, double weight, String gender,double strideLengthCm) async {
+  Future<void> saveUserPhysicalData(double height, double weight, String gender, double strideLengthCm, int stepGoal) async {
     if (databaseService is StepDatabaseHelper) {
-      await (databaseService as StepDatabaseHelper).saveUserData(height, weight, gender,strideLengthCm);
+      await (databaseService as StepDatabaseHelper).saveUserData(height, weight, gender, strideLengthCm, stepGoal);
     }
   }
 
