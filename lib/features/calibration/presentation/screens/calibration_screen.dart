@@ -73,9 +73,7 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
                           state is CalibrationStreamSuccess) {
                         return CompleteCalibrationButton(
                           onPressed: () {
-                            final cubit = CalibrationCubit.get(context);
-                            cubit.saveUserData();
-                            cubit.finishCalibration();
+                            CalibrationCubit.get(context).finishCalibration();
                           },
                         );
                       } else if (state is CalibrationSuccess) {

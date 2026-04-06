@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/errors/error_strings.dart';
 import 'package:stridex/core/errors/failure.dart';
 import 'package:stridex/core/constant/app_strings.dart';
@@ -51,12 +52,13 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     Gender? gender,
     int? stepGoal,
   }) async {
-    await saveUserPhysicalDataUseCase(UserPhysicalData(
-      height: height ?? double.tryParse(heightController.text) ?? 170.0,
-      weight: weight ?? double.tryParse(weightController.text) ?? 70.0,
+    CalibrationData.userPhysicalData = UserPhysicalData(
+      height: height ?? double.tryParse(heightController.text) !,
+      weight: weight ?? double.tryParse(weightController.text) !,
       gender: gender ?? selectedGender,
-      stepGoal: stepGoal ?? int.tryParse(stepGoalController.text) ?? 2000,
-    ));
+      stepGoal: stepGoal ?? int.tryParse(stepGoalController.text) !,
+    );
+    await saveUserPhysicalDataUseCase(CalibrationData.userPhysicalData);
   }
 
   Future<void> finishCalibration() async {

@@ -1,4 +1,3 @@
-import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/features/Calibration/domain/entity/calibration_factor_entity.dart';
 
 abstract class CalibrateStepsUseCase {

@@ -5,6 +5,7 @@ import 'package:stridex/core/constant/route_constant.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
+import 'package:stridex/features/calibration/presentation/controller/calibration_cubit.dart';
 import 'package:stridex/features/calibration/presentation/widgets/calibration_content_widget.dart';
 import 'package:stridex/features/calibration/presentation/widgets/gender_card.dart';
 import 'package:stridex/features/calibration/presentation/widgets/physic_scard.dart';
@@ -45,6 +46,7 @@ class UserDataScreen extends StatelessWidget {
                   child: CalibrationContentWidget(
                     onNext: () {
                       _nextScreen(context);
+                      CalibrationCubit.get(context).saveUserData();
                     },
                   ),
                 ),

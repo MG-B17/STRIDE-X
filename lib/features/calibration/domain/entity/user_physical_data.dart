@@ -12,9 +12,25 @@ class UserPhysicalData extends Equatable {
     required this.height,
     required this.weight,
     required this.gender,
-    this.stepGoal = 2000,
+    required this.stepGoal,
     this.strideLengthCm = 0.415,
   });
+
+  UserPhysicalData copyWith({
+    double? height,
+    double? weight,
+    Gender? gender,
+    int? stepGoal,
+    double? strideLengthCm,
+  }) {
+    return UserPhysicalData(
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      gender: gender ?? this.gender,
+      stepGoal: stepGoal ?? this.stepGoal,
+      strideLengthCm: strideLengthCm ?? this.strideLengthCm,
+    );
+  }
 
   @override
   List<Object?> get props => [height, weight, gender, stepGoal, strideLengthCm];

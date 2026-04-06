@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stridex/features/step_counter/domian/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/today_steps_usecase.dart';
@@ -26,7 +25,6 @@ class StepCounterCubit extends Cubit<StepCounterState> {
       either.fold((failure) => emit(Error(message: failure.message)), (steps) {
         final stepMatrixEntity = getStepMatrix(steps: steps);
         final int goal = CalibrationData.userPhysicalData.stepGoal;
-        print(goal);
         final double progress = (steps / goal);
         emit(
           Loaded(
