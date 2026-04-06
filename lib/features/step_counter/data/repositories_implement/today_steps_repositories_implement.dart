@@ -6,6 +6,7 @@ import 'package:stridex/core/errors/failure.dart';
 import 'package:stridex/features/step_counter/data/local_data/baseline.dart';
 import 'package:stridex/features/step_counter/data/local_data/sensor_step.dart';
 import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
+import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
 import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
 
 class TodyStepsRepositoriesImplement extends StepRepositories {
@@ -44,5 +45,20 @@ class TodyStepsRepositoriesImplement extends StepRepositories {
   Future<int> getCachedTodaySteps() async {
     await baselineLocalData.saveBaseline(steps: 0);
     return await todayStepLocalData.getTodaysteps();
+  }
+
+  @override
+  Future<void> saveTodayData({required TodayDataEntity todayData}) async {
+    await todayStepLocalData.saveTodayData(todayData: todayData);
+  }
+  
+  @override
+  Future<void> saveBaseline({required int baseline})async {
+    await baselineLocalData.saveBaseline(steps:baseline);
+  }
+
+  @override
+  Future<List<TodayDataEntity>> getWeeklyData() async {
+    return await todayStepLocalData.getWeeklyData();
   }
 }

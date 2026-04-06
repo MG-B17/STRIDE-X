@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _loadData() async {
-    await CalibrationData.initCalibrationData();
+    await CachedData.initCalibrationData();
   }
 
   @override

@@ -52,13 +52,13 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     Gender? gender,
     int? stepGoal,
   }) async {
-    CalibrationData.userPhysicalData = UserPhysicalData(
+    CachedData.userPhysicalData = UserPhysicalData(
       height: height ?? double.tryParse(heightController.text) !,
       weight: weight ?? double.tryParse(weightController.text) !,
       gender: gender ?? selectedGender,
       stepGoal: stepGoal ?? int.tryParse(stepGoalController.text) !,
     );
-    await saveUserPhysicalDataUseCase(CalibrationData.userPhysicalData);
+    await saveUserPhysicalDataUseCase(CachedData.userPhysicalData);
   }
 
   Future<void> finishCalibration() async {

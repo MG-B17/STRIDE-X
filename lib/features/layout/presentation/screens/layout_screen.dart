@@ -28,7 +28,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
 
 Future<void> _loadData() async {
-    await CalibrationData.initCalibrationData();
+    await CachedData.initCalibrationData();
   }
 
   int _currentIndex = 1;

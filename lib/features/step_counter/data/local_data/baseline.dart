@@ -7,6 +7,7 @@ abstract class BaselineLocalData {
 }
 
 class BaselineLocalDataImpl implements BaselineLocalData {
+  
   @override
   Future<int> getBaseline() async {
     return CacheHelper.getData(key: AppKeys.baselineStep) ?? 0;

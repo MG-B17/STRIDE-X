@@ -1,15 +1,19 @@
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/utils/date_helper.dart';
+import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
 
 abstract class TodayStepLocalData {
   Future<int> getTodaysteps();
   Future<void> saveTodaySteps({required int steps});
-  Future<Map<String, dynamic>> getTodayData();
+  Future<TodayDataEntity> getTodayData();
+  Future<void> saveTodayData({required TodayDataEntity todayData});
+  Future<List<TodayDataEntity>> getWeeklyData();
 }
 
 class StepCounterLocalDataImpl extends TodayStepLocalData {
   final DatabaseService databaseService;
   final DateHelper dateHelper;
+
 
   StepCounterLocalDataImpl({
     required this.databaseService,
@@ -19,17 +23,20 @@ class StepCounterLocalDataImpl extends TodayStepLocalData {
   @override
   Future<int> getTodaysteps() async {
     final data = await getTodayData();
-    return data['steps_count'] as int? ?? 0;
+    return data.stepsCount as int? ?? 0;
   }
 
   @override
   Future<void> saveTodaySteps({required int steps}) async {
     final todayStr = DateTime.now().toIso8601String().split('T')[0];
-    await databaseService.insert('steps', {'steps_count': steps, 'date': todayStr});
+    await databaseService.insert('steps', {
+      'steps_count': steps,
+      'date': todayStr,
+    });
   }
 
   @override
-  Future<Map<String, dynamic>> getTodayData() async {
+  Future<TodayDataEntity> getTodayData() async {
     final today = await dateHelper.getTodayDate();
     final todayStr = today.toIso8601String().split('T')[0];
 
@@ -40,14 +47,54 @@ class StepCounterLocalDataImpl extends TodayStepLocalData {
     );
 
     if (results.isNotEmpty) {
-      return results.first;
+      return TodayDataEntity.fromMap(results.first);
     }
-    return {
-      'steps_count': 0,
-      'calories': 0.0,
-      'distance': 0.0,
-      'active_time_seconds': 0,
-      'date': todayStr,
-    };
+
+    return TodayDataEntity(
+      stepsCount: 0,
+      calories: 0.0,
+      distance: 0.0,
+      activeTimeSeconds: 0,
+      date: today,
+    );
+  }
+
+  @override
+  Future<void> saveTodayData({required TodayDataEntity todayData}) async {
+    final todayStr = todayData.date.toIso8601String().split('T')[0];
+    final existing = await databaseService.query(
+      'steps',
+      where: 'date = ?',
+      whereArgs: [todayStr],
+    );
+
+    if (existing.isNotEmpty) {
+      await databaseService.update(
+        'steps',
+        todayData.toMap(),
+        where: 'date = ?',
+        whereArgs: [todayStr],
+      );
+    } else {
+      await databaseService.insert('steps', todayData.toMap());
+    }
+  }
+
+  @override
+  Future<List<TodayDataEntity>> getWeeklyData() async {
+    final today = await dateHelper.getTodayDate();
+    final firstDayOfWeek = today.subtract(Duration(days: today.weekday - 1));
+    final lastDayOfWeek = firstDayOfWeek.add(const Duration(days: 6));
+
+    final firstDayStr = firstDayOfWeek.toIso8601String().split('T')[0];
+    final lastDayStr = lastDayOfWeek.toIso8601String().split('T')[0];
+
+    final results = await databaseService.query(
+      'steps',
+      where: 'date >= ? AND date <= ?',
+      whereArgs: [firstDayStr, lastDayStr],
+    );
+
+    return results.map((e) => TodayDataEntity.fromMap(e)).toList();
   }
 }

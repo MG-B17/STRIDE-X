@@ -91,12 +91,24 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const VerticalSpacingWidget(value: 28),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: const WeeklyProgressWidget(
-                  values: [0.55, 0.40, 0.70, 1.0, 0.60, 0.30, 0.45],
-                  activeIndex: 3,
-                ),
+              BlocBuilder<StepCounterCubit, StepCounterState>(
+                builder: (context, state) {
+                  List<double> values = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+                  int activeIndex = DateTime.now().weekday - 1;
+
+                  if (state is Loaded) {
+                    values = state.weeklyValues;
+                    activeIndex = state.activeIndex;
+                  }
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: WeeklyProgressWidget(
+                      values: values,
+                      activeIndex: activeIndex,
+                    ),
+                  );
+                },
               ),
               const VerticalSpacingWidget(value: 20),
               Padding(

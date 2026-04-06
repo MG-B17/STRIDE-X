@@ -18,15 +18,17 @@ import 'package:stridex/features/step_counter/data/local_data/sensor_step.dart';
 import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
 import 'package:stridex/features/step_counter/data/repositories_implement/today_steps_repositories_implement.dart';
 import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
+import 'package:stridex/features/step_counter/domian/usecase/active_time_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/today_steps_usecase.dart';
+import 'package:stridex/features/step_counter/domian/usecase/weekly_progress_usecase.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 
 final init = GetIt.instance;
 
 Future<void> initDependencies() async {
   //Cubit
-  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), getStepMatrix: init()));
+  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), getStepMatrix: init(), weeklyProgressUsecase: init(), activeTimeUsecase: init()));
   init.registerFactory<CalibrationCubit>(
     () => CalibrationCubit(
       calibrateUseCase: init(),
@@ -39,6 +41,8 @@ Future<void> initDependencies() async {
   //UseCase
   init.registerLazySingleton(()=>GetStepMatrix());
   init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>WeeklyProgressUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>ActiveTimeUsecase());
   init.registerLazySingleton<CalibrateStepsUseCase>(
     () => CalibrateStepsUseCaseImpl(),
   );

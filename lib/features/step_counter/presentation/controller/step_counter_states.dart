@@ -22,6 +22,8 @@ class Loaded extends StepCounterState {
   final double calories;
   final double distance;
   final int activeTime;
+  final List<double> weeklyValues;
+  final int activeIndex;
 
   const Loaded({
     required this.dailyStep,
@@ -30,6 +32,8 @@ class Loaded extends StepCounterState {
     required this.calories,
     required this.distance,
     required this.activeTime,
+    required this.weeklyValues,
+    required this.activeIndex,
   });
 
   @override
@@ -40,6 +44,8 @@ class Loaded extends StepCounterState {
         calories,
         distance,
         activeTime,
+        weeklyValues,
+        activeIndex,
       ];
 }
 

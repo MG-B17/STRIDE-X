@@ -12,7 +12,7 @@ class SaveUserPhysicalDataUseCase {
 
     final distanceCorrection = strideLengthCm(userData.height, userData.gender);
 
-    CalibrationData.userPhysicalData.copyWith(stepGoal:userData.stepGoal); 
+    CachedData.userPhysicalData.copyWith(stepGoal:userData.stepGoal); 
     
     return await repository.saveUserPhysicalData(
       UserPhysicalData(

@@ -35,7 +35,7 @@ class MotivationalTextWidget extends StatelessWidget {
                   ),
                   if (!isGoalReached) ...[
                     TextSpan(
-                      text: '\nOnly ${_fmt(remaining)}\nsteps',
+                      text: '\n ${_fmt(remaining)} steps',
                       style: TextStyle(
                         fontFamily: fontFamily,
                         fontSize: 16.sp,

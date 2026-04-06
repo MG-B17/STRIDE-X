@@ -4,7 +4,7 @@ import 'package:stridex/features/step_counter/domian/entity/step_matrix_entity.d
 
 class GetStepMatrix {
 
-  final UserPhysicalData userPhysicalData = CalibrationData.userPhysicalData;
+  final UserPhysicalData userPhysicalData = CachedData.userPhysicalData;
 
   StepMatrixEntity call({required int steps}) {
     final double distance = _calculateDistance(steps: steps, strideLengthCm: userPhysicalData.strideLengthCm!);
