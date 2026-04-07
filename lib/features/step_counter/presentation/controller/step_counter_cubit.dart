@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stridex/features/step_counter/domian/usecase/active_time_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/today_steps_usecase.dart';
 import 'package:stridex/features/step_counter/domian/usecase/weekly_progress_usecase.dart';
@@ -11,7 +10,6 @@ class StepCounterCubit extends Cubit<StepCounterState> {
   final GetStepMatrix getStepMatrix;
   final TodayStepsUsecase todayStepsUsecase;
   final WeeklyProgressUsecase weeklyProgressUsecase;
-  final ActiveTimeUsecase activeTimeUsecase;
 
   StreamSubscription? _streamSubscription;
 
@@ -19,7 +17,6 @@ class StepCounterCubit extends Cubit<StepCounterState> {
     required this.todayStepsUsecase,
     required this.getStepMatrix,
     required this.weeklyProgressUsecase,
-    required this.activeTimeUsecase,
   }) : super(Initial());
 
   static StepCounterCubit get(context) => BlocProvider.of(context);
@@ -32,12 +29,13 @@ class StepCounterCubit extends Cubit<StepCounterState> {
     int activeIndex = DateTime.now().weekday - 1;
 
    _streamSubscription = todayStepsUsecase().listen((either) {
-      either.fold((failure) => emit(Error(message: failure.message)), (steps) {
+      either.fold((failure) => emit(Error(message: failure.message)), (todayData) {
+        final int steps = todayData.stepsCount;
         final stepMatrixEntity = getStepMatrix(steps: steps);
         final int goal = CachedData.userPhysicalData.stepGoal;
         final double progress = (steps / goal);
         
-        final int activeMinutes = activeTimeUsecase(steps: steps);
+        final int activeMinutes = todayData.activeTimeSeconds ~/ 60;
         
         weeklyValues[activeIndex] = progress;
 

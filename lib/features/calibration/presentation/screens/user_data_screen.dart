@@ -34,10 +34,9 @@ class UserDataScreen extends StatelessWidget {
                 const PhysicSCard(),
                 const VerticalSpacingWidget(value: 12),
                 const GenderCard(),
-                Row(
-                  children: [
-                    const SetStepGoalWidget(),
-                  ],
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h),
+                  child: const Row(children: [SetStepGoalWidget()]),
                 ),
                 const VerticalSpacingWidget(value: 24),
                 const StrideCalibrationWidget(),

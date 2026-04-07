@@ -9,10 +9,13 @@ import 'package:stridex/features/step_counter/domian/repositories/step_repositor
 class TodayStepsUsecase {
   final StepRepositories stepRepositories;
   int _lastSaveSteps = 0;
+  
+  int? _lastProcessedSteps;
+  DateTime? _lastStepTime;
 
   TodayStepsUsecase({required this.stepRepositories});
 
-  Stream<Either<Failure, int>> call() async* {
+  Stream<Either<Failure, TodayDataEntity>> call() async* {
     yield* stepRepositories.todaySteps().asyncMap((either) async {
       return await either.fold(
         (failure) {
@@ -31,20 +34,60 @@ class TodayStepsUsecase {
             stepCorrectionFactor:
                 CachedData.stepsCalculationEntity.stepCorrectionFactor,
           );
+
+          _updateActiveTime(correctedSteps);
+
+
+          CachedData.todayDataEntity = TodayDataEntity(
+            stepsCount: correctedSteps,
+            calories: CachedData.todayDataEntity.calories,
+            distance: CachedData.todayDataEntity.distance,
+            activeTimeSeconds: CachedData.todayDataEntity.activeTimeSeconds,
+            date: CachedData.todayDataEntity.date,
+          );
+
           if (_isTimeToSave(
             lastSavedSteps: _lastSaveSteps,
             correctedSteps: correctedSteps,
           )) {
-            unawaited(stepRepositories.saveTodaySteps(steps: correctedSteps));
+            // Save full entity to safely persist active_time_seconds and steps
+            unawaited(stepRepositories.saveTodayData(todayData: CachedData.todayDataEntity));
             _lastSaveSteps = correctedSteps;
           }
 
-          return right(correctedSteps);
+          return right(CachedData.todayDataEntity);
         },
       );
     });
   }
 
+  void _updateActiveTime(int currentSteps) {
+    final now = DateTime.now();
+
+    if (_lastProcessedSteps != null && _lastStepTime != null) {
+      final int deltaSteps = currentSteps - _lastProcessedSteps!;
+      final int timeDiffSeconds = now.difference(_lastStepTime!).inSeconds;
+
+      if (deltaSteps > 0 && timeDiffSeconds > 0) {
+        final double stepsPerSecond = deltaSteps / timeDiffSeconds;
+
+        if (deltaSteps <= 20 && stepsPerSecond >= 0.5 && stepsPerSecond <= 3.5) {
+          final int newActiveTime = CachedData.todayDataEntity.activeTimeSeconds + timeDiffSeconds;
+          
+          CachedData.todayDataEntity = TodayDataEntity(
+            stepsCount: CachedData.todayDataEntity.stepsCount,
+            calories: CachedData.todayDataEntity.calories,
+            distance: CachedData.todayDataEntity.distance,
+            activeTimeSeconds: newActiveTime,
+            date: CachedData.todayDataEntity.date,
+          );
+        }
+      }
+    }
+
+    _lastProcessedSteps = currentSteps;
+    _lastStepTime = now;
+  }
 
   Future<int> _calculateTodayStep({
     required int sensorSteps,
@@ -58,17 +101,14 @@ class TodayStepsUsecase {
     }
   }
 
-
   int _correctStep({required int steps, required double stepCorrectionFactor}) {
     final int correctStep = (steps * stepCorrectionFactor).round();
     return correctStep;
   }
 
-
   bool _isSenseorReset({required int baseline, required int sensorSteps}) {
     return sensorSteps < baseline;
   }
-
 
   bool _isTimeToSave({
     required int lastSavedSteps,
@@ -77,12 +117,10 @@ class TodayStepsUsecase {
     return (correctedSteps - lastSavedSteps) >= 100;
   }
 
-
   bool _isTheSameDay({required DateTime day}) {
     final now = DateTime.now();
     return day.year == now.year && day.month == now.month && day.day == now.day;
   }
-
 
   Future<void> _resetCounter({required int newBaseline}) async {
     await stepRepositories.saveTodayData(todayData: CachedData.todayDataEntity);
@@ -96,6 +134,8 @@ class TodayStepsUsecase {
       activeTimeSeconds: 0,
       date: DateTime.now(),
     );
+    _lastProcessedSteps = null;
+    _lastStepTime = null;
     unawaited(
       stepRepositories.saveTodayData(todayData: CachedData.todayDataEntity),
     );

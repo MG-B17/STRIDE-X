@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
+import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
+import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
 import 'package:stridex/features/profile/presentation/widgets/daily_goal_card.dart';
 import 'package:stridex/features/profile/presentation/widgets/notifications_card.dart';
 import 'package:stridex/features/profile/presentation/widgets/profile_header_widget.dart';
@@ -32,7 +36,22 @@ class ProfileScreen extends StatelessWidget {
                 title: AppStrings.accountSettings,
                 trailingText: AppStrings.personalization,
               ),
-              const DailyGoalCard(steps: "10000",),
+              BlocBuilder<StepCounterCubit, StepCounterState>(
+                builder: (context, state) {
+                  String goalSteps = CachedData.userPhysicalData.stepGoal.toString();
+                  double progress = 0.0;
+
+                  if (state is Loaded) {
+                    goalSteps = state.goalStep.toString();
+                    progress = state.progressStep;
+                  }
+
+                  return DailyGoalCard(
+                    steps: goalSteps,
+                    progress: progress,
+                  );
+                },
+              ),
               VerticalSpacingWidget(value: 16),
               const StrideAccurateWidget(),
               VerticalSpacingWidget(value: 16),

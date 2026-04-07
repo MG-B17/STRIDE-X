@@ -11,7 +11,6 @@ import 'package:stridex/features/step_counter/presentation/widgets/motivational_
 import 'package:stridex/features/step_counter/presentation/widgets/home_stat_card.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/active_time_card.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/weekly_progress_widget.dart';
-import 'package:stridex/features/step_counter/presentation/widgets/latest_workout_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -109,11 +108,6 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-              const VerticalSpacingWidget(value: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: const LatestWorkoutCard(),
               ),
               const VerticalSpacingWidget(value: 24),
             ],

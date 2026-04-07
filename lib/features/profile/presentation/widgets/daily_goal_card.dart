@@ -8,8 +8,9 @@ import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class DailyGoalCard extends StatelessWidget {
-  const DailyGoalCard({super.key,required this.steps});
+  const DailyGoalCard({super.key, required this.steps, required this.progress});
   final String steps;
+  final double progress;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class DailyGoalCard extends StatelessWidget {
             ),
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
-              widthFactor: 0.65, // 65% progress mock
+              widthFactor: progress.clamp(0.0, 1.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(3.r),
