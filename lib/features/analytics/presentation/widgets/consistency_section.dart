@@ -7,7 +7,16 @@ import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/core/theme/text_styles.dart';
 
 class ConsistencySection extends StatelessWidget {
-  const ConsistencySection({super.key});
+  final int goalReached;
+  final int nearGoal;
+  final int belowGoal;
+
+  const ConsistencySection({
+    super.key,
+    required this.goalReached,
+    required this.nearGoal,
+    required this.belowGoal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +33,22 @@ class ConsistencySection extends StatelessWidget {
             ),
           ),
         ),
-        const _ConsistencyRow(
+        _ConsistencyRow(
           color: AppColors.kineticGreen,
           label: AppStrings.goalReached,
-          days: '3 Days',
+          days: '$goalReached Days',
         ),
         const VerticalSpacingWidget(value: 8),
-        const _ConsistencyRow(
+        _ConsistencyRow(
           color: AppColors.warning,
           label: AppStrings.nearGoal,
-          days: '2 Days',
+          days: '$nearGoal Days',
         ),
         const VerticalSpacingWidget(value: 8),
-        const _ConsistencyRow(
+        _ConsistencyRow(
           color: AppColors.danger,
           label: AppStrings.belowGoal,
-          days: '2 Days',
+          days: '$belowGoal Days',
         ),
       ],
     );

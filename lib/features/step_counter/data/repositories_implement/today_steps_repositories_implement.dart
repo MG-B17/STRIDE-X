@@ -61,4 +61,14 @@ class TodyStepsRepositoriesImplement extends StepRepositories {
   Future<List<TodayDataEntity>> getWeeklyData() async {
     return await todayStepLocalData.getWeeklyData();
   }
+
+  @override
+  Future<List<TodayDataEntity>> getLastNDaysData(int days) async {
+    return await todayStepLocalData.getLastNDaysData(days);
+  }
+
+  @override
+  Future<List<TodayDataEntity>> getAllHistoricalData() async {
+    return await todayStepLocalData.getAllHistoricalData();
+  }
 }

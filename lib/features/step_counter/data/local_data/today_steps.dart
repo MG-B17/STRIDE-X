@@ -8,6 +8,8 @@ abstract class TodayStepLocalData {
   Future<TodayDataEntity> getTodayData();
   Future<void> saveTodayData({required TodayDataEntity todayData});
   Future<List<TodayDataEntity>> getWeeklyData();
+  Future<List<TodayDataEntity>> getLastNDaysData(int days);
+  Future<List<TodayDataEntity>> getAllHistoricalData();
 }
 
 class StepCounterLocalDataImpl extends TodayStepLocalData {
@@ -95,6 +97,30 @@ class StepCounterLocalDataImpl extends TodayStepLocalData {
       whereArgs: [firstDayStr, lastDayStr],
     );
 
+    return results.map((e) => TodayDataEntity.fromMap(e)).toList();
+  }
+
+  @override
+  Future<List<TodayDataEntity>> getLastNDaysData(int days) async {
+    final today = await dateHelper.getTodayDate();
+    final pastDay = today.subtract(Duration(days: days - 1));
+
+    final pastDayStr = pastDay.toIso8601String().split('T')[0];
+    final todayStr = today.toIso8601String().split('T')[0];
+
+    final results = await databaseService.query(
+      'steps',
+      where: 'date >= ? AND date <= ?',
+      whereArgs: [pastDayStr, todayStr],
+    );
+
+    return results.map((e) => TodayDataEntity.fromMap(e)).toList();
+  }
+
+  @override
+  Future<List<TodayDataEntity>> getAllHistoricalData() async {
+    final db = await databaseService.database;
+    final results = await db.query('steps', orderBy: 'date ASC');
     return results.map((e) => TodayDataEntity.fromMap(e)).toList();
   }
 }

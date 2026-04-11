@@ -8,7 +8,8 @@ import 'package:stridex/features/step_counter/domian/repositories/step_repositor
 
 class TodayStepsUsecase {
   final StepRepositories stepRepositories;
-  int _lastSaveSteps = 0;
+  int _lastSaveSteps = -1;
+  int _lastSaveActiveTime = -1;
   
   int? _lastProcessedSteps;
   DateTime? _lastStepTime;
@@ -49,10 +50,13 @@ class TodayStepsUsecase {
           if (_isTimeToSave(
             lastSavedSteps: _lastSaveSteps,
             correctedSteps: correctedSteps,
+            lastSavedActiveTime: _lastSaveActiveTime,
+            currentActiveTime: CachedData.todayDataEntity.activeTimeSeconds,
           )) {
             // Save full entity to safely persist active_time_seconds and steps
             unawaited(stepRepositories.saveTodayData(todayData: CachedData.todayDataEntity));
             _lastSaveSteps = correctedSteps;
+            _lastSaveActiveTime = CachedData.todayDataEntity.activeTimeSeconds;
           }
 
           return right(CachedData.todayDataEntity);
@@ -113,8 +117,14 @@ class TodayStepsUsecase {
   bool _isTimeToSave({
     required int lastSavedSteps,
     required int correctedSteps,
+    required int lastSavedActiveTime,
+    required int currentActiveTime,
   }) {
-    return (correctedSteps - lastSavedSteps) >= 100;
+    // Save every 10 steps OR if 30 seconds of active time have passed since last save
+    final bool stepThresholdReached = (correctedSteps - lastSavedSteps).abs() >= 10;
+    final bool activeTimeThresholdReached = (currentActiveTime - lastSavedActiveTime).abs() >= 30;
+    
+    return stepThresholdReached || activeTimeThresholdReached;
   }
 
   bool _isTheSameDay({required DateTime day}) {
@@ -136,6 +146,8 @@ class TodayStepsUsecase {
     );
     _lastProcessedSteps = null;
     _lastStepTime = null;
+    _lastSaveSteps = 0;
+    _lastSaveActiveTime = 0;
     unawaited(
       stepRepositories.saveTodayData(todayData: CachedData.todayDataEntity),
     );

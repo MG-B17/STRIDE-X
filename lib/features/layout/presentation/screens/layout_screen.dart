@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/constant/app_strings.dart';
-import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/di/injection.dart' as di;
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 import 'package:stridex/features/step_counter/presentation/screens/home_screen.dart';
@@ -23,18 +22,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   void initState() {
     super.initState();
-   _loadData() ;
-  }
-
-
-Future<void> _loadData() async {
-    await CachedData.initCalibrationData();
   }
 
   int _currentIndex = 1;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+     HomeScreen(),
     const AnalyticsScreen(),
     const HistoryScreen(),
     const ProfileScreen(),
@@ -47,7 +40,10 @@ Future<void> _loadData() async {
     return BlocProvider(
       create: (context) =>di.init<StepCounterCubit>()..startStepsStream(),
       child: Scaffold(
-        body: _screens[_currentIndex],
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _screens,
+        ),
         bottomNavigationBar: Container(
           padding: EdgeInsets.only(
             left: 16.w,

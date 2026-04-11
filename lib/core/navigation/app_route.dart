@@ -60,7 +60,7 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: "home",
           name: AppRouteConstant.homeScreenRoute,
-          builder: (context, state) => const HomeScreen(),
+          builder: (context, state) =>  HomeScreen(),
         ),
         GoRoute(
           path: "analytic",

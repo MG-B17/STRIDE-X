@@ -6,12 +6,15 @@ import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class LegendaryBadgeCard extends StatelessWidget {
-  const LegendaryBadgeCard({super.key});
+  final bool isUnlocked;
+  const LegendaryBadgeCard({super.key, required this.isUnlocked});
 
   @override
   Widget build(BuildContext context) {
-    return StrideCard(
-      padding: EdgeInsets.zero,
+    return Opacity(
+      opacity: isUnlocked ? 1.0 : 0.45,
+      child: StrideCard(
+        padding: EdgeInsets.zero,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24.r),
         child: Stack(
@@ -99,6 +102,7 @@ class LegendaryBadgeCard extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

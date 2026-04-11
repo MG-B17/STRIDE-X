@@ -30,7 +30,7 @@ class TodayDataEntity {
       'calories': calories,
       'distance': distance,
       'active_time_seconds': activeTimeSeconds,
-      'date': date.toIso8601String(),
+      'date': date.toIso8601String().split('T')[0],
     };
   }
 }

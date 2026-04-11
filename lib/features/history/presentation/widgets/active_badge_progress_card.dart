@@ -7,7 +7,16 @@ import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class ActiveBadgeProgressCard extends StatelessWidget {
-  const ActiveBadgeProgressCard({super.key});
+  final double progress;     // 0.0–1.0
+  final int currentSteps;
+  final int goalSteps;
+
+  const ActiveBadgeProgressCard({
+    super.key,
+    required this.progress,
+    required this.currentSteps,
+    required this.goalSteps,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +48,7 @@ class ActiveBadgeProgressCard extends StatelessWidget {
                 ],
               ),
               Text(
-                '70%',
+                '${(progress * 100).toInt()}%',
                 style: context.textTheme.titleLarge?.copyWith(
                   color: AppColors.kineticGreen,
                   fontWeight: FontWeight.w800,
@@ -59,7 +68,7 @@ class ActiveBadgeProgressCard extends StatelessWidget {
             ),
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
-              widthFactor: 0.7,
+              widthFactor: progress.clamp(0.0, 1.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.r),
@@ -77,14 +86,14 @@ class ActiveBadgeProgressCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                AppStrings.sevenThousandSteps,
+                currentSteps.formatWithCommas(),
                 style: context.textTheme.labelSmall?.copyWith(
                   color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                   letterSpacing: 1.0,
                 ),
               ),
               Text(
-                AppStrings.tenThousandStepsGoal,
+                goalSteps.formatWithCommas(),
                 style: context.textTheme.labelSmall?.copyWith(
                   color: context.colorScheme.onSurface.withValues(alpha: 0.5),
                   letterSpacing: 1.0,

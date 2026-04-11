@@ -21,24 +21,28 @@ class _SplashScreenState extends State<SplashScreen> {
     _nextScreen();
   }
 
-  void _nextScreen() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (!mounted) return;
-      final bool isOnboardingVisited =
-          CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
+  Future<void> _nextScreen() async {
+    // Start loading data immediately
+    final loadingFuture = CachedData.initCalibrationData();
+    
+    // Ensure splash screen stays for at least 3 seconds
+    await Future.delayed(const Duration(seconds: 3));
+    
+    // Ensure data is fully loaded before proceeding
+    await loadingFuture;
 
-      if (isOnboardingVisited) {
-        _loadData();
-        context.goNamed(AppRouteConstant.layoutScreenRoute);
-      } else {
-        context.goNamed(AppRouteConstant.onboardingScreenRoute);
-      }
-    });
+    if (!mounted) return;
+    
+    final bool isOnboardingVisited =
+        CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
+
+    if (isOnboardingVisited) {
+      context.goNamed(AppRouteConstant.layoutScreenRoute);
+    } else {
+      context.goNamed(AppRouteConstant.onboardingScreenRoute);
+    }
   }
 
-  Future<void> _loadData() async {
-    await CachedData.initCalibrationData();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,11 @@ import 'package:stridex/core/theme/text_styles.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class TotalWeeklyStepsCard extends StatelessWidget {
-  const TotalWeeklyStepsCard({super.key});
+  final int totalWeeklySteps;
+  const TotalWeeklyStepsCard({
+    super.key,
+    required this.totalWeeklySteps,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +20,12 @@ class TotalWeeklyStepsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.totalWeeklySteps, style: _labelStyle(context)),
+          Text(AppStrings.totalWeeklySteps, style: context.analyticsLabelStyle),
           const VerticalSpacingWidget(value: 8),
           Row(
             children: [
               Text(
-                AppStrings.defaultTotalSteps,
+                totalWeeklySteps.formatWithCommas(),
                 style: TextStyle(
                   fontFamily: fontFamily,
                   fontSize: 32.sp,
@@ -44,7 +48,7 @@ class TotalWeeklyStepsCard extends StatelessWidget {
                 ),
               ),
               FractionallySizedBox(
-                widthFactor: 0.7,
+                widthFactor: 1.0, // Represents max context inside this card
                 child: Container(
                   height: 6.h,
                   decoration: BoxDecoration(
@@ -59,16 +63,4 @@ class TotalWeeklyStepsCard extends StatelessWidget {
       ),
     );
   }
-
-  TextStyle _labelStyle(BuildContext context) {
-    return TextStyle(
-      fontFamily: fontFamily,
-      fontSize: 10.sp,
-      fontWeight: FontWeight.w800,
-      letterSpacing: 1.5,
-      color: context.colorScheme.onSurface.withValues(alpha: 0.5),
-    );
-  }
 }
-
-

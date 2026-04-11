@@ -8,7 +8,14 @@ import 'package:stridex/core/theme/text_styles.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class GoalCompletionCard extends StatelessWidget {
-  const GoalCompletionCard({super.key});
+  final int goalReached;
+  final int daysToAnalyze;
+  
+  const GoalCompletionCard({
+    super.key,
+    required this.goalReached,
+    required this.daysToAnalyze,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,7 @@ class GoalCompletionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.goalCompletion, style: _labelStyle(context)),
+          Text(AppStrings.goalCompletion, style: context.analyticsLabelStyle),
           const VerticalSpacingWidget(value: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,7 +32,7 @@ class GoalCompletionCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppStrings.defaultGoalPercent,
+                    '${((goalReached / (daysToAnalyze == 0 ? 1 : daysToAnalyze)) * 100).toInt()}%',
                     style: TextStyle(
                       fontFamily: fontFamily,
                       fontSize: 32.sp,
@@ -35,7 +42,7 @@ class GoalCompletionCard extends StatelessWidget {
                   ),
                   const VerticalSpacingWidget(value: 4),
                   Text(
-                    AppStrings.defaultGoalDays,
+                    '$goalReached Days',
                     style: TextStyle(
                       fontFamily: fontFamily,
                       fontSize: 12.sp,
@@ -48,7 +55,7 @@ class GoalCompletionCard extends StatelessWidget {
                 width: 48.w,
                 height: 48.w,
                 child: CircularProgressIndicator(
-                  value: 0.71,
+                  value: goalReached / (daysToAnalyze == 0 ? 1 : daysToAnalyze),
                   strokeWidth: 6.w,
                   backgroundColor: context.colorScheme.onSurface.withValues(alpha: 0.1),
                   valueColor: const AlwaysStoppedAnimation<Color>(AppColors.pulseBlue),
@@ -58,16 +65,6 @@ class GoalCompletionCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  TextStyle _labelStyle(BuildContext context) {
-    return TextStyle(
-      fontFamily: fontFamily,
-      fontSize: 10.sp,
-      fontWeight: FontWeight.w800,
-      letterSpacing: 1.5,
-      color: context.colorScheme.onSurface.withValues(alpha: 0.5),
     );
   }
 }

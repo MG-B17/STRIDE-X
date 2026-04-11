@@ -14,7 +14,6 @@ import 'package:stridex/features/profile/presentation/widgets/settings_action_bu
 import 'package:stridex/features/profile/presentation/widgets/sign_out_section.dart';
 import 'package:stridex/features/profile/presentation/widgets/stride_accurate_widget.dart';
 import 'package:stridex/features/profile/presentation/widgets/theme_selection_card.dart';
-import 'package:stridex/features/profile/presentation/widgets/units_toggle_card.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -37,6 +36,14 @@ class ProfileScreen extends StatelessWidget {
                 trailingText: AppStrings.personalization,
               ),
               BlocBuilder<StepCounterCubit, StepCounterState>(
+                // Only rebuild when goal progress changes — avoids repaints on every step tick
+                buildWhen: (prev, curr) {
+                  if (prev is Loaded && curr is Loaded) {
+                    return prev.progressStep != curr.progressStep ||
+                        prev.goalStep != curr.goalStep;
+                  }
+                  return prev.runtimeType != curr.runtimeType;
+                },
                 builder: (context, state) {
                   String goalSteps = CachedData.userPhysicalData.stepGoal.toString();
                   double progress = 0.0;
@@ -55,7 +62,6 @@ class ProfileScreen extends StatelessWidget {
               VerticalSpacingWidget(value: 16),
               const StrideAccurateWidget(),
               VerticalSpacingWidget(value: 16),
-              const UnitsToggleCard(),
               // Notifications
               const SectionHeaderWidget(
                 title: AppStrings.notifications,

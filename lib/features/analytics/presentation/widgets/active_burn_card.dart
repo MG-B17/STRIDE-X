@@ -9,7 +9,12 @@ import 'package:stridex/core/theme/text_styles.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class ActiveBurnCard extends StatelessWidget {
-  const ActiveBurnCard({super.key});
+  final double averageBurn;
+
+  const ActiveBurnCard({
+    super.key,
+    required this.averageBurn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +22,13 @@ class ActiveBurnCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppStrings.activeBurn, style: _labelStyle(context)),
+          Text(AppStrings.activeBurn, style: context.analyticsLabelStyle),
           const VerticalSpacingWidget(value: 8),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                AppStrings.defaultBurn,
+                averageBurn.toInt().formatWithCommas(),
                 style: TextStyle(
                   fontFamily: fontFamily,
                   fontSize: 32.sp,
@@ -67,16 +72,4 @@ class ActiveBurnCard extends StatelessWidget {
       ),
     );
   }
-
-  TextStyle _labelStyle(BuildContext context) {
-    return TextStyle(
-      fontFamily: fontFamily,
-      fontSize: 10.sp,
-      fontWeight: FontWeight.w800,
-      letterSpacing: 1.5,
-      color: context.colorScheme.onSurface.withValues(alpha: 0.5),
-    );
-  }
 }
-
-

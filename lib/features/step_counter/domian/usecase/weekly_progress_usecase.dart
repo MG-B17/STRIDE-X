@@ -11,7 +11,6 @@ class WeeklyProgressUsecase {
     final List<TodayDataEntity> weeklyData = await stepRepositories.getWeeklyData();
     final int stepGoal = CachedData.userPhysicalData.stepGoal;
     
-    // Initialize a list of 7 days with 0.0, index 0 is Monday, index 6 is Sunday.
     final List<double> progressValues = List.filled(7, 0.0);
 
     for (var entity in weeklyData) {

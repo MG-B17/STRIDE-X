@@ -8,7 +8,14 @@ import 'package:stridex/core/theme/text_styles.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class StepPerformanceCard extends StatelessWidget {
-  const StepPerformanceCard({super.key});
+  final int averageSteps;
+  final List<double> performanceRatios;
+
+  const StepPerformanceCard({
+    super.key,
+    required this.averageSteps,
+    required this.performanceRatios,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class StepPerformanceCard extends StatelessWidget {
             children: [
               Text(
                 AppStrings.stepPerformance,
-                style: _labelStyle(context),
+                style: context.analyticsLabelStyle,
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -49,7 +56,7 @@ class StepPerformanceCard extends StatelessWidget {
           ),
           const VerticalSpacingWidget(value: 8),
           Text(
-            AppStrings.defaultAvgSteps,
+            averageSteps.formatWithCommas(),
             style: TextStyle(
               fontFamily: fontFamily,
               fontSize: 36.sp,
@@ -74,7 +81,7 @@ class StepPerformanceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ...[0.4, 0.5, 0.7, 0.6, 1.0, 0.8, 0.5].map((val) => Container(
+                ...performanceRatios.map((val) => Container(
                       width: 8.w,
                       height: 80.h * val,
                       decoration: BoxDecoration(
@@ -107,16 +114,6 @@ class StepPerformanceCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  TextStyle _labelStyle(BuildContext context) {
-    return TextStyle(
-      fontFamily: fontFamily,
-      fontSize: 10.sp,
-      fontWeight: FontWeight.w800,
-      letterSpacing: 1.5,
-      color: context.colorScheme.onSurface.withValues(alpha: 0.5),
     );
   }
 }

@@ -11,6 +11,10 @@ import 'package:stridex/features/calibration/domain/repo/calibration_stream_repo
 import 'package:stridex/features/calibration/domain/usecase/calibrate_steps_usecase.dart';
 import 'package:stridex/features/calibration/domain/usecase/calibration_stream_usecase.dart';
 import 'package:stridex/features/calibration/domain/usecase/get_user_physical_data_usecase.dart';
+import 'package:stridex/features/analytics/domain/usecase/get_analytics_data_usecase.dart';
+import 'package:stridex/features/analytics/presentation/controller/analytics_cubit.dart';
+import 'package:stridex/features/history/domain/usecase/get_history_data_usecase.dart';
+import 'package:stridex/features/history/presentation/controller/history_cubit.dart';
 import 'package:stridex/features/calibration/domain/usecase/save_user_physical_data_usecase.dart';
 import 'package:stridex/features/calibration/presentation/controller/calibration_cubit.dart';
 import 'package:stridex/features/step_counter/data/local_data/baseline.dart';
@@ -28,6 +32,8 @@ final init = GetIt.instance;
 Future<void> initDependencies() async {
   //Cubit
   init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), getStepMatrix: init(), weeklyProgressUsecase: init()));
+  init.registerFactory<AnalyticsCubit>(()=>AnalyticsCubit(getAnalyticsDataUsecase: init()));
+  init.registerFactory<HistoryCubit>(()=>HistoryCubit(getHistoryDataUsecase: init()));
   init.registerFactory<CalibrationCubit>(
     () => CalibrationCubit(
       calibrateUseCase: init(),
@@ -40,6 +46,8 @@ Future<void> initDependencies() async {
   //UseCase
   init.registerLazySingleton(()=>GetStepMatrix());
   init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>GetAnalyticsDataUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>GetHistoryDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>WeeklyProgressUsecase(stepRepositories: init()));
   init.registerLazySingleton<CalibrateStepsUseCase>(
     () => CalibrateStepsUseCaseImpl(),
@@ -72,7 +80,7 @@ Future<void> initDependencies() async {
   init.registerLazySingleton<BaselineLocalData>(() => BaselineLocalDataImpl());
   init.registerLazySingleton<TodayStepLocalData>(()=>StepCounterLocalDataImpl(databaseService: init(), dateHelper: init()));
   init.registerLazySingleton<DateHelper>(() => DateHelperImpl());
-  init.registerFactory<CalibrationLocalData>(
+  init.registerLazySingleton<CalibrationLocalData>(
     () => CalibrationLocalDataImpl(databaseService: init()),
   );
 

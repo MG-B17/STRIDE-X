@@ -8,7 +8,9 @@ import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_card.dart';
 
 class GrowthCard extends StatelessWidget {
-  const GrowthCard({super.key});
+  final double growthPercent;
+
+  const GrowthCard({super.key, required this.growthPercent});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class GrowthCard extends StatelessWidget {
           ),
           VerticalSpacingWidget(value: 12),
           Text(
-            '+15%',
+            '${growthPercent >= 0 ? '+' : ''}${growthPercent.toStringAsFixed(1)}%',
             style: context.textTheme.headlineMedium?.copyWith(
               color: AppColors.kineticGreen,
               fontWeight: FontWeight.w800,

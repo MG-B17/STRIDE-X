@@ -14,4 +14,6 @@ abstract class StepRepositories {
   Future<void> saveBaseline({required int baseline});
 
   Future<List<TodayDataEntity>> getWeeklyData();
+  Future<List<TodayDataEntity>> getLastNDaysData(int days);
+  Future<List<TodayDataEntity>> getAllHistoricalData();
 }

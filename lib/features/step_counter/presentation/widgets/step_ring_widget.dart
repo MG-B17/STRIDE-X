@@ -8,6 +8,7 @@ import 'dart:math' as math;
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
+import 'package:stridex/features/step_counter/presentation/widgets/animated_steps_text.dart';
 
 class StepRingWidget extends StatelessWidget {
   const StepRingWidget({super.key});
@@ -16,8 +17,14 @@ class StepRingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = context.colorScheme;
 
-    return BlocConsumer<StepCounterCubit, StepCounterState>(
-      listener: (context, state) {},
+    return BlocBuilder<StepCounterCubit, StepCounterState>(
+      buildWhen: (prev, curr) {
+        if (prev is Loaded && curr is Loaded) {
+          return prev.dailyStep != curr.dailyStep ||
+              prev.progressStep != curr.progressStep;
+        }
+        return prev.runtimeType != curr.runtimeType;
+      },
       builder: (context, state) {
         if (state is Loaded) {
           return Center(
@@ -29,8 +36,9 @@ class StepRingWidget extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      _fmt(state.dailyStep),
+                    AnimatedStepsText(
+                      targetStep: state.dailyStep,
+                      formatter: (val) => val.formatWithCommas(),
                       style: context.textTheme.headlineLarge?.copyWith(
                         fontSize: 38.sp,
                         fontWeight: FontWeight.w800,
@@ -78,13 +86,6 @@ class StepRingWidget extends StatelessWidget {
         }
       },
     );
-  }
-
-  String _fmt(int n) {
-    final s = n.toString();
-    return n >= 1000
-        ? '${s.substring(0, s.length - 3)},${s.substring(s.length - 3)}'
-        : s;
   }
 }
 

@@ -17,6 +17,14 @@ class MotivationalTextWidget extends StatelessWidget {
     final textTheme = context.textTheme;
 
     return BlocBuilder<StepCounterCubit, StepCounterState>(
+      // Only rebuild when the steps remaining to goal actually changes
+      buildWhen: (prev, curr) {
+        if (prev is Loaded && curr is Loaded) {
+          return prev.dailyStep != curr.dailyStep ||
+              prev.goalStep != curr.goalStep;
+        }
+        return prev.runtimeType != curr.runtimeType;
+      },
       builder: (context, state) {
         if (state is Loaded) {
           final int remaining = state.goalStep - state.dailyStep;
@@ -35,7 +43,7 @@ class MotivationalTextWidget extends StatelessWidget {
                   ),
                   if (!isGoalReached) ...[
                     TextSpan(
-                      text: '\n ${_fmt(remaining)} steps',
+                      text: '\n ${remaining.formatWithCommas()} steps',
                       style: TextStyle(
                         fontFamily: fontFamily,
                         fontSize: 16.sp,
@@ -53,12 +61,5 @@ class MotivationalTextWidget extends StatelessWidget {
         return const SizedBox.shrink();
       },
     );
-  }
-
-  String _fmt(int n) {
-    final s = n.toString();
-    return n >= 1000
-        ? '${s.substring(0, s.length - 3)},${s.substring(s.length - 3)}'
-        : s;
   }
 }
