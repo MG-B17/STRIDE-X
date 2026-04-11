@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:stridex/core/services/activity_premssion_service.dart';
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/services/step_database_helper.dart';
+import 'package:stridex/core/services/notification_service.dart';
 import 'package:stridex/core/utils/date_helper.dart';
 import 'package:stridex/features/calibration/data/local_data/calibration_local_data.dart';
 import 'package:stridex/features/calibration/data/repo_impl/calibration_factor_repository_impl.dart';
@@ -45,7 +46,7 @@ Future<void> initDependencies() async {
 
   //UseCase
   init.registerLazySingleton(()=>GetStepMatrix());
-  init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init(), notificationService: init()));
   init.registerLazySingleton(()=>GetAnalyticsDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>GetHistoryDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>WeeklyProgressUsecase(stepRepositories: init()));
@@ -89,6 +90,7 @@ Future<void> initDependencies() async {
   init.registerLazySingleton<ActivityPremssionService>(
     () => ActivityPremssionService(),
   );
+  init.registerLazySingleton<NotificationService>(() => NotificationService());
 
   // 
 }

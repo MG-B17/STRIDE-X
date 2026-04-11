@@ -1,14 +1,11 @@
 import 'package:stridex/core/data/calibration_data.dart';
-import 'package:stridex/features/calibration/domain/entity/user_physical_data.dart';
 import 'package:stridex/features/step_counter/domian/entity/step_matrix_entity.dart';
 
 class GetStepMatrix {
 
-  final UserPhysicalData userPhysicalData = CachedData.userPhysicalData;
-
   StepMatrixEntity call({required int steps}) {
-    final double distance = _calculateDistance(steps: steps, strideLengthCm: userPhysicalData.strideLengthCm!);
-    final calories = _calculateCalories(steps: steps, weight:userPhysicalData.weight);
+    final double distance = _calculateDistance(steps: steps, strideLengthCm:CachedData.userPhysicalData.strideLengthCm!);
+    final calories = _calculateCalories(steps: steps, weight:CachedData.userPhysicalData.weight);
     return StepMatrixEntity(calories: calories, distance: distance);
   }
 

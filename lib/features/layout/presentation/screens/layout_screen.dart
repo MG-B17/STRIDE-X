@@ -24,7 +24,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     super.initState();
   }
 
-  int _currentIndex = 1;
+  int _currentIndex = 0;
 
   final List<Widget> _screens = [
      HomeScreen(),

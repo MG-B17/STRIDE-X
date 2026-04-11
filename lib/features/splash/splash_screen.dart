@@ -23,13 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _nextScreen() async {
     // Start loading data immediately
-    final loadingFuture = CachedData.initCalibrationData();
+    
     
     // Ensure splash screen stays for at least 3 seconds
     await Future.delayed(const Duration(seconds: 3));
     
-    // Ensure data is fully loaded before proceeding
-    await loadingFuture;
 
     if (!mounted) return;
     
@@ -37,9 +35,10 @@ class _SplashScreenState extends State<SplashScreen> {
         CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
 
     if (isOnboardingVisited) {
+      CachedData.initCalibrationData();
       context.goNamed(AppRouteConstant.layoutScreenRoute);
     } else {
-      context.goNamed(AppRouteConstant.onboardingScreenRoute);
+     context.goNamed(AppRouteConstant.onboardingScreenRoute);
     }
   }
 

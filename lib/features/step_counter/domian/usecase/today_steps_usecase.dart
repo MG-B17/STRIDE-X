@@ -1,20 +1,26 @@
 import 'dart:async';
-
 import 'package:dartz/dartz.dart';
 import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/errors/failure.dart';
 import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
 import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
+import 'package:stridex/core/services/notification_service.dart';
+import 'package:stridex/core/constant/keys.dart';
+import 'package:stridex/core/utils/cache_helper.dart';
 
 class TodayStepsUsecase {
   final StepRepositories stepRepositories;
+  final NotificationService notificationService;
   int _lastSaveSteps = -1;
   int _lastSaveActiveTime = -1;
   
   int? _lastProcessedSteps;
   DateTime? _lastStepTime;
 
-  TodayStepsUsecase({required this.stepRepositories});
+  TodayStepsUsecase({
+    required this.stepRepositories,
+    required this.notificationService,
+  });
 
   Stream<Either<Failure, TodayDataEntity>> call() async* {
     yield* stepRepositories.todaySteps().asyncMap((either) async {
@@ -59,6 +65,8 @@ class TodayStepsUsecase {
             _lastSaveActiveTime = CachedData.todayDataEntity.activeTimeSeconds;
           }
 
+          _checkGoalNotification(correctedSteps);
+
           return right(CachedData.todayDataEntity);
         },
       );
@@ -91,6 +99,28 @@ class TodayStepsUsecase {
 
     _lastProcessedSteps = currentSteps;
     _lastStepTime = now;
+  }
+
+  void _checkGoalNotification(int currentSteps) {
+    bool isNotificationsEnabled =
+        CacheHelper.getData(key: AppKeys.isDailyReminderEnabled) ?? true;
+
+    if (!isNotificationsEnabled) return;
+
+    final goal = CachedData.userPhysicalData.stepGoal;
+    if (currentSteps >= goal) {
+      final todayStr = DateTime.now().toIso8601String().split('T')[0];
+      final lastNotifiedDate =
+          CacheHelper.getData(key: AppKeys.lastNotifiedGoalDate);
+
+      if (lastNotifiedDate != todayStr) {
+        notificationService.showGoalReachedNotification(steps: goal);
+        CacheHelper.saveData(
+          key: AppKeys.lastNotifiedGoalDate,
+          value: todayStr,
+        );
+      }
+    }
   }
 
   Future<int> _calculateTodayStep({

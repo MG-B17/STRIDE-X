@@ -174,4 +174,10 @@ class AppStrings {
   static const String precisionGuaranteed =
       'PRECISION GUARANTEED BY STRIDEX\nENGINE';
   static const String biologicalGender = 'BIOLOGICAL GENDER';
+
+  // Notifications
+  static const String goalReachedTitle = "Goal Reached! 🎉";
+  static const String goalReachedBody = "Congratulations! You've reached your daily goal of {steps} steps. Keep crushing it!";
+  static const String morningMotivationTitle = "Good Morning! ☀️";
+  static const String morningMotivationBody = "Ready for a new day of movement? Let's get those steps in!";
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stridex/core/di/injection.dart';
+import 'package:stridex/core/services/notification_service.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
 import 'package:stridex/core/constant/app_strings.dart';
@@ -134,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
-              const VerticalSpacingWidget(value: 24),
+              const VerticalSpacingWidget(value: 28),
             ],
           ),
         ),
