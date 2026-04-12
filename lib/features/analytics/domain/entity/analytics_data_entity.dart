@@ -30,3 +30,6 @@ class AnalyticsDataEntity extends Equatable {
         averageActiveBurn,
       ];
 }
+
+
+

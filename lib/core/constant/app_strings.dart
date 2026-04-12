@@ -181,3 +181,6 @@ class AppStrings {
   static const String morningMotivationTitle = "Good Morning! ☀️";
   static const String morningMotivationBody = "Ready for a new day of movement? Let's get those steps in!";
 }
+
+
+

@@ -1,7 +1,7 @@
 class AppRouteConstant {
   static String splashScreenRoute = "Splash";
   static String onboardingScreenRoute = "Onboarding";
-  static String premissionScreenRoute = "premission";
+  static String permissionScreenRoute = "permission";
   static String layoutScreenRoute = "layout";
   static String historyScreenRoute = "history";
   static String analyticScreenRoute = "analytic";
@@ -10,3 +10,6 @@ class AppRouteConstant {
   static String calibrationScreenRoute = "calibration";
   static String userDataScreenRoute = "userdata";
 }
+
+
+

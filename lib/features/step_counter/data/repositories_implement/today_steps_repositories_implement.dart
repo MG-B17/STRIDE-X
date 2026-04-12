@@ -6,15 +6,15 @@ import 'package:stridex/core/errors/failure.dart';
 import 'package:stridex/features/step_counter/data/local_data/baseline.dart';
 import 'package:stridex/features/step_counter/data/local_data/sensor_step.dart';
 import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
-import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
-import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
+import 'package:stridex/features/step_counter/domain/repositories/step_repositories.dart';
 
-class TodyStepsRepositoriesImplement extends StepRepositories {
+class TodayStepsRepositoriesImplement extends StepRepositories {
   final BaselineLocalData baselineLocalData;
   final GetStepDataFormSensor getStepDataFormSensor;
   final TodayStepLocalData todayStepLocalData;
 
-  TodyStepsRepositoriesImplement({
+  TodayStepsRepositoriesImplement({
     required this.baselineLocalData,
     required this.getStepDataFormSensor,
     required this.todayStepLocalData,
@@ -72,3 +72,6 @@ class TodyStepsRepositoriesImplement extends StepRepositories {
     return await todayStepLocalData.getAllHistoricalData();
   }
 }
+
+
+

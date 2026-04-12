@@ -1,20 +1,20 @@
 import 'package:pedometer/pedometer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stridex/core/errors/exception.dart';
-import 'package:stridex/core/services/activity_premssion_service.dart';
+import 'package:stridex/core/services/activity_permission_service.dart';
 
 abstract class GetStepDataFormSensor {
   Stream<int> getStepsFromSensor();
 }
 
 class GetStepDataFormSensorImpl extends GetStepDataFormSensor {
-  final ActivityPremssionService activityPremssionService;
+  final ActivityPermissionService activityPermissionService;
 
-  GetStepDataFormSensorImpl({required this.activityPremssionService});
+  GetStepDataFormSensorImpl({required this.activityPermissionService});
 
   @override
   Stream<int> getStepsFromSensor() async* {
-    final permissionResult = await activityPremssionService.handlePermission();
+    final permissionResult = await activityPermissionService.handlePermission();
 
     if (!permissionResult) {
       throw PermissionDeniedException();

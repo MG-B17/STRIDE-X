@@ -30,3 +30,6 @@ class StrideCard extends StatelessWidget {
     );
   }
 }
+
+
+

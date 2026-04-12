@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/core/di/injection.dart';
-import 'package:stridex/core/services/notification_service.dart';
 import 'package:stridex/core/widgets/spacing_widget.dart';
 import 'package:stridex/core/widgets/stride_x_app_bar.dart';
 import 'package:stridex/core/constant/app_strings.dart';
-import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/step_ring_widget.dart';
@@ -16,9 +13,8 @@ import 'package:stridex/features/step_counter/presentation/widgets/active_time_c
 import 'package:stridex/features/step_counter/presentation/widgets/weekly_progress_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
-  final TodayStepLocalData object = init<TodayStepLocalData>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +31,6 @@ class HomeScreen extends StatelessWidget {
               const MotivationalTextWidget(),
               const VerticalSpacingWidget(value: 28),
               BlocBuilder<StepCounterCubit, StepCounterState>(
-                // Rebuild only when calories or distance change
                 buildWhen: (prev, curr) {
                   if (prev is Loaded && curr is Loaded) {
                     return prev.calories != curr.calories ||
@@ -143,3 +138,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+

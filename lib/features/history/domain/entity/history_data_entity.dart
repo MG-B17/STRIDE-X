@@ -31,3 +31,6 @@ class HistoryDataEntity extends Equatable {
     achievements,
   ];
 }
+
+
+

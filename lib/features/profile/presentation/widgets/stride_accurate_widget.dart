@@ -71,3 +71,6 @@ class StrideAccurateWidget extends StatelessWidget {
     );
   }
 }
+
+
+

@@ -9,3 +9,6 @@ class ErrorStrings {
   static const String invalidStepCount = 'Please ensure you are taking steps.';
   static const String failToAccessDate = 'Failed to get yyour Calender Data';
 }
+
+
+

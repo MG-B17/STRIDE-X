@@ -35,3 +35,6 @@ class UserPhysicalData extends Equatable {
   @override
   List<Object?> get props => [height, weight, gender, stepGoal, strideLengthCm];
 }
+
+
+

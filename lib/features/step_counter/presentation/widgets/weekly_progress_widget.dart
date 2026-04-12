@@ -104,3 +104,6 @@ class WeeklyProgressWidget extends StatelessWidget {
     );
   }
 }
+
+
+

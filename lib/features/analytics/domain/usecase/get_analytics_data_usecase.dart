@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/features/analytics/domain/entity/analytics_data_entity.dart';
-import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
-import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
+import 'package:stridex/features/step_counter/domain/repositories/step_repositories.dart';
 
 class GetAnalyticsDataUsecase {
   final StepRepositories stepRepositories;
@@ -66,3 +66,6 @@ class GetAnalyticsDataUsecase {
     );
   }
 }
+
+
+

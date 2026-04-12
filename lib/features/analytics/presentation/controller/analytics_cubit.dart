@@ -24,3 +24,6 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
     }
   }
 }
+
+
+

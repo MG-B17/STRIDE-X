@@ -153,3 +153,6 @@ class AppTextStylesLight {
     color: AppColors.kineticGreen,
   );
 }
+
+
+

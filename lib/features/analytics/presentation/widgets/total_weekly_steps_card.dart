@@ -64,3 +64,6 @@ class TotalWeeklyStepsCard extends StatelessWidget {
     );
   }
 }
+
+
+

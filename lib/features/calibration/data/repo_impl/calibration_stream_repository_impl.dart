@@ -3,17 +3,17 @@ import 'package:pedometer/pedometer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stridex/core/errors/error_strings.dart';
 import 'package:stridex/core/errors/failure.dart';
-import 'package:stridex/core/services/activity_premssion_service.dart';
+import 'package:stridex/core/services/activity_permission_service.dart';
 import 'package:stridex/features/calibration/domain/repo/calibration_stream_repository.dart';
 
 class CalibrationStreamRepositoryImpl extends CalibrationStreamRepository {
-  final ActivityPremssionService activityPremssionService;
+  final ActivityPermissionService activityPermissionService;
 
-  CalibrationStreamRepositoryImpl({required this.activityPremssionService});
+  CalibrationStreamRepositoryImpl({required this.activityPermissionService});
 
   @override
   Stream<Either<Failure, int>> getCalibrationStream() async* {
-    final hasPermission = await activityPremssionService.handlePermission();
+    final hasPermission = await activityPermissionService.handlePermission();
     if (!hasPermission) {
       yield left(PermissionDeniedFailure(ErrorStrings.permissionDeniedError));
       return;
@@ -30,3 +30,6 @@ class CalibrationStreamRepositoryImpl extends CalibrationStreamRepository {
     }
   }
 }
+
+
+

@@ -1,47 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:stridex/core/constant/keys.dart';
-import 'package:stridex/core/constant/route_constant.dart';
-import 'package:stridex/core/data/calibration_data.dart';
-import 'package:stridex/core/utils/cache_helper.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  bool isdark = false;
-  @override
-  void initState() {
-    super.initState();
-    _nextScreen();
-  }
-
-  Future<void> _nextScreen() async {
-    // Start loading data immediately
-    
-    
-    // Ensure splash screen stays for at least 3 seconds
-    await Future.delayed(const Duration(seconds: 3));
-    
-
-    if (!mounted) return;
-    
-    final bool isOnboardingVisited =
-        CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
-
-    if (isOnboardingVisited) {
-      CachedData.initCalibrationData();
-      context.goNamed(AppRouteConstant.layoutScreenRoute);
-    } else {
-     context.goNamed(AppRouteConstant.onboardingScreenRoute);
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,3 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+
+

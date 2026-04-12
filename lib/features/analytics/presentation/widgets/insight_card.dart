@@ -46,3 +46,6 @@ class InsightCard extends StatelessWidget {
     );
   }
 }
+
+
+

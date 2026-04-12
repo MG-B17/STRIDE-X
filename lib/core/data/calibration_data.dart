@@ -2,9 +2,9 @@ import 'package:stridex/features/calibration/domain/entity/user_physical_data.da
 import 'package:stridex/features/calibration/domain/repo/calibration_factor_repository.dart';
 import 'package:stridex/features/step_counter/data/local_data/baseline.dart';
 import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
-import 'package:stridex/features/step_counter/domian/entity/step_calculation_entity.dart';
+import 'package:stridex/features/step_counter/domain/entity/step_calculation_entity.dart';
 import 'package:stridex/core/di/injection.dart' as di;
-import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
 
 class CachedData {
   static late StepsCalculationEntity stepsCalculationEntity;
@@ -44,3 +44,6 @@ class CachedData {
     stepsCalculationEntity.stepCorrectionFactor = factor;
   }
 }
+
+
+

@@ -3,8 +3,8 @@ import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/core/theme/app_color.dart';
 import 'package:stridex/features/history/domain/entity/achievement_entity.dart';
 import 'package:stridex/features/history/domain/entity/history_data_entity.dart';
-import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
-import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
+import 'package:stridex/features/step_counter/domain/repositories/step_repositories.dart';
 
 class GetHistoryDataUsecase {
   final StepRepositories stepRepositories;
@@ -182,3 +182,6 @@ class _WeeklySteps {
     required this.growthPercent,
   });
 }
+
+
+

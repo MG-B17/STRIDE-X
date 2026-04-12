@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:stridex/core/services/activity_premssion_service.dart';
+import 'package:stridex/core/services/activity_permission_service.dart';
+import 'package:stridex/core/services/notification_permission_service.dart';
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/services/step_database_helper.dart';
 import 'package:stridex/core/services/notification_service.dart';
@@ -22,17 +23,17 @@ import 'package:stridex/features/step_counter/data/local_data/baseline.dart';
 import 'package:stridex/features/step_counter/data/local_data/sensor_step.dart';
 import 'package:stridex/features/step_counter/data/local_data/today_steps.dart';
 import 'package:stridex/features/step_counter/data/repositories_implement/today_steps_repositories_implement.dart';
-import 'package:stridex/features/step_counter/domian/repositories/step_repositories.dart';
-import 'package:stridex/features/step_counter/domian/usecase/distance_and_cal_usecase.dart';
-import 'package:stridex/features/step_counter/domian/usecase/today_steps_usecase.dart';
-import 'package:stridex/features/step_counter/domian/usecase/weekly_progress_usecase.dart';
+import 'package:stridex/features/step_counter/domain/repositories/step_repositories.dart';
+import 'package:stridex/features/step_counter/domain/usecase/distance_and_cal_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/today_steps_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/weekly_progress_usecase.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 
 final init = GetIt.instance;
 
 Future<void> initDependencies() async {
   //Cubit
-  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), getStepMatrix: init(), weeklyProgressUsecase: init()));
+  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), distanceAndCalUsecase: init(), weeklyProgressUsecase: init()));
   init.registerFactory<AnalyticsCubit>(()=>AnalyticsCubit(getAnalyticsDataUsecase: init()));
   init.registerFactory<HistoryCubit>(()=>HistoryCubit(getHistoryDataUsecase: init()));
   init.registerFactory<CalibrationCubit>(
@@ -45,7 +46,7 @@ Future<void> initDependencies() async {
   );
 
   //UseCase
-  init.registerLazySingleton(()=>GetStepMatrix());
+  init.registerLazySingleton(()=>DistanceAndCalUsecase());
   init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init(), notificationService: init()));
   init.registerLazySingleton(()=>GetAnalyticsDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>GetHistoryDataUsecase(stepRepositories: init()));
@@ -64,17 +65,17 @@ Future<void> initDependencies() async {
   );
 
   /// repositories 
-  init.registerLazySingleton<StepRepositories>(()=>TodyStepsRepositoriesImplement(baselineLocalData: init(), getStepDataFormSensor: init(), todayStepLocalData: init()));
+  init.registerLazySingleton<StepRepositories>(()=>TodayStepsRepositoriesImplement(baselineLocalData: init(), getStepDataFormSensor: init(), todayStepLocalData: init()));
   init.registerLazySingleton<CalibrationRepository>(
     () => CalibrationRepositoryImpl(localData: init()),
   );
   init.registerLazySingleton<CalibrationStreamRepository>(
     () => CalibrationStreamRepositoryImpl(
-      activityPremssionService: init<ActivityPremssionService>(),
+      activityPermissionService: init<ActivityPermissionService>(),
     ),
   );
   init.registerLazySingleton<GetStepDataFormSensor>(
-    () => GetStepDataFormSensorImpl(activityPremssionService: init()),
+    () => GetStepDataFormSensorImpl(activityPermissionService: init()),
   );
 
   // DataSource
@@ -87,11 +88,17 @@ Future<void> initDependencies() async {
 
   // Services
   init.registerLazySingleton<DatabaseService>(() => StepDatabaseHelper());
-  init.registerLazySingleton<ActivityPremssionService>(
-    () => ActivityPremssionService(),
+  init.registerLazySingleton<ActivityPermissionService>(
+    () => ActivityPermissionService(),
+  );
+  init.registerLazySingleton<NotificationPermissionService>(
+    () => NotificationPermissionService(),
   );
   init.registerLazySingleton<NotificationService>(() => NotificationService());
 
   // 
 }
  
+
+
+

@@ -1,6 +1,6 @@
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/utils/date_helper.dart';
-import 'package:stridex/features/step_counter/domian/entity/today_data_entity.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
 
 abstract class TodayStepLocalData {
   Future<int> getTodaysteps();

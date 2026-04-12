@@ -25,3 +25,6 @@ class AnalyticsError extends AnalyticsState {
   @override
   List<Object?> get props => [message];
 }
+
+
+

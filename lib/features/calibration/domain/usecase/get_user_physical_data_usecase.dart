@@ -10,3 +10,6 @@ class GetUserPhysicalDataUseCase {
     return await repository.getUserPhysicalData();
   }
 }
+
+
+

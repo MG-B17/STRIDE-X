@@ -14,3 +14,6 @@ enum PermissionStatusResult {
 enum AppMode { light, dark, system }
 
 enum Gender { male, female, other }
+
+
+

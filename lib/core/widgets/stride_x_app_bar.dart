@@ -29,3 +29,6 @@ class StrideXAppBar extends StatelessWidget {
     );
   }
 }
+
+
+
