@@ -24,21 +24,6 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: "/",
-  redirect: (context, state) async {
-    if (state.fullPath == "/") {
-      await Future.delayed(const Duration(seconds: 3));
-      final bool isOnboardingVisited =
-          CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
-
-      if (isOnboardingVisited) {
-        await CachedData.initCalibrationData();
-        return "/home";
-      } else {
-        return "/onboarding";
-      }
-    }
-    return null;
-  },
   routes: [
     GoRoute(
       path: "/",
