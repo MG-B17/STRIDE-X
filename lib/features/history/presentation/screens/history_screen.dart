@@ -87,7 +87,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         const Spacer(),
                       ],
                     ),
-                    const VerticalSpacingWidget(value: 40),
+                    const VerticalSpacingWidget(value: 16),
                   ],
                 ),
               );

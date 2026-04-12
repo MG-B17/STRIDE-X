@@ -20,7 +20,7 @@ class _CalibrationSuccessButtonState extends State<CalibrationSuccessButton> {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          context.goNamed(AppRouteConstant.layoutScreenRoute);
+          context.goNamed(AppRouteConstant.homeScreenRoute);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.success,

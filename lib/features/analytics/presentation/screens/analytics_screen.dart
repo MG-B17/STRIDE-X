@@ -48,84 +48,98 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const VerticalSpacingWidget(value: 20),
-                    AnalyticsHeader(
-                      title: AppStrings.analyticsTitle,
-                      isWeekly: _cubit.isWeekly,
-                      onWeeklyTap: () => _cubit.loadAnalytics(daysToAnalyze: 7),
-                      onMonthlyTap: () => _cubit.loadAnalytics(daysToAnalyze: 30),
-                    ),
-                    const VerticalSpacingWidget(value: 24),
                     BlocBuilder<AnalyticsCubit, AnalyticsState>(
                       bloc: _cubit,
                       builder: (context, state) {
-                        if (state is AnalyticsLoading) {
-                           return const Center(child: CircularProgressIndicator());
-                        } else if (state is AnalyticsError) {
-                           return Center(child: Text(state.message));
-                        } else if (state is AnalyticsLoaded) {
-                           return Column(
-                             children: [
-                               StepPerformanceCard(
-                                averageSteps: state.data.averageSteps,
-                                performanceRatios: state.data.performanceRatios,
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               const InsightCard(
-                                 icon: Icons.auto_awesome,
-                                 iconColor: AppColors.pulseBlue,
-                                 title: AppStrings.smartInsights,
-                                 content: TextSpan(
-                                   children: [
-                                     TextSpan(text: AppStrings.insightWalked),
-                                     TextSpan(
-                                       text: AppStrings.insightHighlight,
-                                       style: TextStyle(color: AppColors.kineticGreen, fontWeight: FontWeight.w700),
-                                     ),
-                                     TextSpan(text: AppStrings.insightRest),
-                                   ],
-                                 ),
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               const InsightCard(
-                                 icon: Icons.bolt,
-                                 iconColor: AppColors.warning,
-                                 title: AppStrings.peakActivity,
-                                 content: TextSpan(
-                                   children: [
-                                     TextSpan(
-                                       text: AppStrings.peakDay,
-                                       style: TextStyle(color: AppColors.warning, fontWeight: FontWeight.w700),
-                                     ),
-                                     TextSpan(text: AppStrings.peakRest),
-                                   ],
-                                 ),
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               TotalWeeklyStepsCard(
-                                totalWeeklySteps: state.data.totalWeeklySteps,
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               GoalCompletionCard(
-                                goalReached: state.data.goalReachedDays,
-                                daysToAnalyze: _cubit.currentDays,
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               ActiveBurnCard(
-                                averageBurn: state.data.averageActiveBurn,
-                               ),
-                               const VerticalSpacingWidget(value: 16),
-                               ConsistencySection(
-                                goalReached: state.data.goalReachedDays,
-                                nearGoal: state.data.nearGoalDays,
-                                belowGoal: state.data.belowGoalDays,
-                               ),
-                             ],
-                           );
-                        }
-                        return const SizedBox.shrink();
+                        return Column(
+                          children: [
+                            AnalyticsHeader(
+                              title: AppStrings.analyticsTitle,
+                              isWeekly: _cubit.isWeekly,
+                              onWeeklyTap: () => _cubit.loadAnalytics(daysToAnalyze: 7),
+                              onMonthlyTap: () => _cubit.loadAnalytics(daysToAnalyze: 30),
+                            ),
+                            const VerticalSpacingWidget(value: 24),
+                            if (state is AnalyticsLoading)
+                              Padding(
+                                padding: EdgeInsets.only(top: 100.h),
+                                child: const Center(child: CircularProgressIndicator()),
+                              )
+                            else if (state is AnalyticsError)
+                              Padding(
+                                padding: EdgeInsets.only(top: 100.h),
+                                child: Center(child: Text(state.message)),
+                              )
+                            else if (state is AnalyticsLoaded)
+                              Column(
+                                children: [
+                                  StepPerformanceCard(
+                                    averageSteps: state.data.averageSteps,
+                                    performanceRatios: state.data.performanceRatios,
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  const InsightCard(
+                                    icon: Icons.auto_awesome,
+                                    iconColor: AppColors.pulseBlue,
+                                    title: AppStrings.smartInsights,
+                                    content: TextSpan(
+                                      children: [
+                                        TextSpan(text: AppStrings.insightWalked),
+                                        TextSpan(
+                                          text: AppStrings.insightHighlight,
+                                          style: TextStyle(
+                                            color: AppColors.kineticGreen,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(text: AppStrings.insightRest),
+                                      ],
+                                    ),
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  const InsightCard(
+                                    icon: Icons.bolt,
+                                    iconColor: AppColors.warning,
+                                    title: AppStrings.peakActivity,
+                                    content: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: AppStrings.peakDay,
+                                          style: TextStyle(
+                                            color: AppColors.warning,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(text: AppStrings.peakRest),
+                                      ],
+                                    ),
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  TotalWeeklyStepsCard(
+                                    totalWeeklySteps: state.data.totalWeeklySteps,
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  GoalCompletionCard(
+                                    goalReached: state.data.goalReachedDays,
+                                    daysToAnalyze: _cubit.currentDays,
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  ActiveBurnCard(
+                                    averageBurn: state.data.averageActiveBurn,
+                                  ),
+                                  const VerticalSpacingWidget(value: 16),
+                                  ConsistencySection(
+                                    goalReached: state.data.goalReachedDays,
+                                    nearGoal: state.data.nearGoalDays,
+                                    belowGoal: state.data.belowGoalDays,
+                                  ),
+                                ],
+                              ),
+                          ],
+                        );
                       },
                     ),
-                    const VerticalSpacingWidget(value: 100),
+                    const VerticalSpacingWidget(value: 16),
                   ],
                 ),
               ),

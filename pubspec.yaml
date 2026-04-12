@@ -40,12 +40,6 @@ dependencies:
   pedometer: ^4.2.0
   #A Flutter plugin for accessing and managing SQLite databases on Android and iOS.
   sqflite:
-  #A highly customizable Flutter chart library that supports Line Chart, Bar Chart, Pie Chart, Scatter Chart, and Radar Chart.
-  fl_chart: 
-  #Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl: ^0.20.2
-  #Flutter plugin for sharing content via the platform share UI, using the ACTION_SEND intent on Android and UIActivityViewController on iOS.
-  share_plus: 
   #A reactive functional programming library for Dart, based on Observables, to make it easier to work with asynchronous data streams.
   rxdart:
   #A Flutter plugin for querying and requesting permissions on Android and iOS.

@@ -10,6 +10,3 @@ class AppKeys {
   static const String isDailyReminderEnabled = 'isDailyReminderEnabled';
   static const String isStreakAlertsEnabled = 'isStreakAlertsEnabled';
 }
-
-
-

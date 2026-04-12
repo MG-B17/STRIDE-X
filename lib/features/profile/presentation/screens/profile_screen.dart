@@ -61,6 +61,7 @@ class ProfileScreen extends StatelessWidget {
               const NotificationsCard(),
               const SectionHeaderWidget(title: AppStrings.visualTheme),
               const ThemeSelectionCard(),
+              VerticalSpacingWidget(value: 16),
             ],
           ),
         ),
