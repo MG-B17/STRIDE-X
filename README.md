@@ -8,14 +8,10 @@ StrideX is a premium, lightweight health and fitness application built with Flut
 🎥 [Watch App Demo]()
 
 ## 📱 Screenshot
-![Image](https://github.com/user-attachments/assets/12dd07b4-3680-449c-92e3-cb031ff6bb6f)
-![Image](https://github.com/user-attachments/assets/24fb7fc1-bd20-4835-9fcb-ac16f083081e)
-![Image](https://github.com/user-attachments/assets/7c54a8bb-2b41-479b-9a89-059464a04e3a)
-![Image](https://github.com/user-attachments/assets/06cf145d-d035-4a03-aefd-303f6442c7a2)
-![Image](https://github.com/user-attachments/assets/eb7e1acc-9e7e-4656-8680-860211d69810)
-![Image](https://github.com/user-attachments/assets/73827120-f760-4d29-9a35-4851cb3c285f)
-![Image](https://github.com/user-attachments/assets/49bc5167-7f27-4c5c-84c6-1cc93c710025)
-![Image](https://github.com/user-attachments/assets/ed58df5b-cf16-4aaa-a52f-f3502c2fe7d3)
+![Image](https://github.com/user-attachments/assets/12dd07b4-3680-449c-92e3-cb031ff6bb6f) ![Image](https://github.com/user-attachments/assets/24fb7fc1-bd20-4835-9fcb-ac16f083081e)
+![Image](https://github.com/user-attachments/assets/7c54a8bb-2b41-479b-9a89-059464a04e3a) ![Image](https://github.com/user-attachments/assets/06cf145d-d035-4a03-aefd-303f6442c7a2)
+![Image](https://github.com/user-attachments/assets/eb7e1acc-9e7e-4656-8680-860211d69810) ![Image](https://github.com/user-attachments/assets/73827120-f760-4d29-9a35-4851cb3c285f)
+![Image](https://github.com/user-attachments/assets/49bc5167-7f27-4c5c-84c6-1cc93c710025) ![Image](https://github.com/user-attachments/assets/ed58df5b-cf16-4aaa-a52f-f3502c2fe7d3)
 
 
 ## 🚀 Features
