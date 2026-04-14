@@ -20,7 +20,7 @@ class StepDatabaseHelper implements DatabaseService {
   @override
   Future<void> initDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'Stride_X.db');
+    final path = join(dbPath, 'STRIDe_X.db');
 
     _database = await openDatabase(
       path,

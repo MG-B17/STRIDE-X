@@ -1,5 +1,4 @@
 import 'package:stridex/core/constant/stride_enum.dart';
-import 'package:stridex/core/data/calibration_data.dart';
 import 'package:stridex/features/calibration/domain/entity/user_physical_data.dart';
 import 'package:stridex/features/calibration/domain/repo/calibration_factor_repository.dart';
 
@@ -11,8 +10,6 @@ class SaveUserPhysicalDataUseCase {
   Future<void> call(UserPhysicalData userData) async {
 
     final distanceCorrection = strideLengthCm(userData.height, userData.gender);
-
-    CachedData.userPhysicalData.copyWith(stepGoal:userData.stepGoal); 
     
     return await repository.saveUserPhysicalData(
       UserPhysicalData(

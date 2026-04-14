@@ -26,7 +26,7 @@ class AnalyticsHeader extends StatelessWidget {
       children: [
         Text(
           title,
-          style: context.textTheme.headlineLarge,
+          style: context.textTheme.headlineMedium,
         ),
         Container(
           padding: EdgeInsets.all(4.w),
@@ -72,7 +72,7 @@ class _ToggleButton extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.kineticGreen : Colors.transparent,
           borderRadius: BorderRadius.circular(20.r),

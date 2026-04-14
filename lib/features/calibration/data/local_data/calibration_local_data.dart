@@ -35,10 +35,7 @@ class CalibrationLocalDataImpl implements CalibrationLocalData {
 
   @override
   Future<Map<String, dynamic>?> getUserPhysicalData() async {
-    if (databaseService is StepDatabaseHelper) {
       return await (databaseService as StepDatabaseHelper).getUserData();
-    }
-    return null;
   }
 }
 

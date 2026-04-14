@@ -9,7 +9,6 @@ import 'package:stridex/features/step_counter/presentation/controller/step_count
 import 'package:stridex/features/step_counter/presentation/widgets/step_ring_widget.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/motivational_text_widget.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/home_stat_card.dart';
-import 'package:stridex/features/step_counter/presentation/widgets/active_time_card.dart';
 import 'package:stridex/features/step_counter/presentation/widgets/weekly_progress_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -72,37 +71,6 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               const VerticalSpacingWidget(value: 12),
-              BlocBuilder<StepCounterCubit, StepCounterState>(
-                // Rebuild only when activeTime changes
-                buildWhen: (prev, curr) {
-                  if (prev is Loaded && curr is Loaded) {
-                    return prev.activeTime != curr.activeTime;
-                  }
-                  return prev.runtimeType != curr.runtimeType;
-                },
-                builder: (context, state) {
-                  String activeTimeString = '0m';
-                  if (state is Loaded) {
-                    final int totalMinutes = state.activeTime;
-                    if (totalMinutes < 1) {
-                      activeTimeString = '0m';
-                    } else if (totalMinutes < 60) {
-                      activeTimeString = '${totalMinutes}m';
-                    } else {
-                      final int h = totalMinutes ~/ 60;
-                      final int m = totalMinutes % 60;
-                      activeTimeString = '${h}h ${m}m';
-                    }
-                  }
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: ActiveTimeCard(
-                      iconPath: 'assets/svg/timer_icon.svg',
-                      activeTime: activeTimeString,
-                    ),
-                  );
-                },
-              ),
               const VerticalSpacingWidget(value: 28),
               BlocBuilder<StepCounterCubit, StepCounterState>(
                 buildWhen: (prev, curr) {
@@ -138,6 +106,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-

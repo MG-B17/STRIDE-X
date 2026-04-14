@@ -7,28 +7,23 @@ import 'package:stridex/core/services/notification_service.dart';
 import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/utils/cache_helper.dart';
 
-import 'package:stridex/features/step_counter/domain/services/active_time_service.dart';
-
 class TodayStepsUsecase {
   final StepRepositories stepRepositories;
   final NotificationService notificationService;
-  final ActiveTimeService _activeTimeService = ActiveTimeService();
-
-  int _lastSaveSteps = -1;
-  int _lastSaveActiveTime = -1;
+  int _lastSavedSteps = 0 ;
 
   TodayStepsUsecase({
     required this.stepRepositories,
     required this.notificationService,
   });
 
-  Stream<Either<Failure, TodayDataEntity>> call({
+
+  Stream<Either<Failure, int>> call({
     required TodayDataEntity initialTodayData,
     required int stepGoal,
     required double stepCorrectionFactor,
     required int baseline,
   }) async* {
-    TodayDataEntity currentTodayData = initialTodayData;
     int currentBaseline = baseline;
 
     yield* stepRepositories.todaySteps().asyncMap((either) async {
@@ -37,9 +32,10 @@ class TodayStepsUsecase {
           return left(failure);
         },
         (sensorSteps) async {
-          if (!_isTheSameDay(day: currentTodayData.date)) {
-            final resetResult = await _resetCounter(newBaseline: sensorSteps, currentTodayData: currentTodayData);
-            currentTodayData = resetResult.value1;
+          
+          if (!_isTheSameDay(day: initialTodayData.date)) {
+            final resetResult = await _resetCounter(newBaseline: sensorSteps, currentTodayData: initialTodayData);
+            initialTodayData = resetResult.value1;
             currentBaseline = resetResult.value2;
           }
 
@@ -53,25 +49,17 @@ class TodayStepsUsecase {
             stepCorrectionFactor: stepCorrectionFactor,
           );
 
-          currentTodayData = _activeTimeService.updateActiveTime(
-            currentSteps: correctedSteps,
-            currentEntity: currentTodayData,
-          );
 
           if (_isTimeToSave(
-            lastSavedSteps: _lastSaveSteps,
-            correctedSteps: correctedSteps,
-            lastSavedActiveTime: _lastSaveActiveTime,
-            currentActiveTime: currentTodayData.activeTimeSeconds,
+            lastSavedSteps:_lastSavedSteps,
+            correctedSteps: correctedSteps
           )) {
-            unawaited(stepRepositories.saveTodayData(todayData: currentTodayData));
-            _lastSaveSteps = correctedSteps;
-            _lastSaveActiveTime = currentTodayData.activeTimeSeconds;
+            unawaited(stepRepositories.saveTodayData(todayData: initialTodayData));
+            _lastSavedSteps = correctedSteps ;
           }
-
           _checkGoalNotification(correctedSteps, stepGoal);
 
-          return right(currentTodayData);
+          return right(correctedSteps);
         },
       );
     });
@@ -121,17 +109,11 @@ class TodayStepsUsecase {
     return sensorSteps < baseline;
   }
 
-  bool _isTimeToSave({
+ bool _isTimeToSave({
     required int lastSavedSteps,
     required int correctedSteps,
-    required int lastSavedActiveTime,
-    required int currentActiveTime,
   }) {
-    // Save every 10 steps OR if 30 seconds of active time have passed since last save
-    final bool stepThresholdReached = (correctedSteps - lastSavedSteps).abs() >= 10;
-    final bool activeTimeThresholdReached = (currentActiveTime - lastSavedActiveTime).abs() >= 30;
-    
-    return stepThresholdReached || activeTimeThresholdReached;
+    return (correctedSteps - lastSavedSteps) >= 50;
   }
 
   bool _isTheSameDay({required DateTime day}) {
@@ -153,10 +135,6 @@ class TodayStepsUsecase {
       activeTimeSeconds: 0,
       date: DateTime.now(),
     );
-
-    _activeTimeService.reset();
-    _lastSaveSteps = 0;
-    _lastSaveActiveTime = 0;
 
     unawaited(stepRepositories.saveTodayData(todayData: resetEntity));
 

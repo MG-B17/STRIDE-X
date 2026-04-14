@@ -36,6 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     } else {
       context.goNamed(AppRouteConstant.permissionScreenRoute);
       CacheHelper.saveData(key: AppKeys.isOnboardingVisited, value: true);
+      CacheHelper.saveData(key: AppKeys.isFirstLuanchApp, value: false);
     }
   }
 

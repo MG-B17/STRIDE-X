@@ -12,22 +12,14 @@ import 'package:stridex/stride_x.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
   Bloc.observer = MyBlocObserver();
-  await initializeServices();
+  ScreenUtil.ensureScreenSize();
+  await initDependencies();
+  await CacheHelper.init();
+  await init<DatabaseService>().initDatabase();
+  await init<NotificationService>().init();
   runApp(
     const StrideX(),
   );
-}
-
-
-
-Future<void> initializeServices()async{
-  Future.wait([
-   ScreenUtil.ensureScreenSize(),
-   initDependencies(),
-   CacheHelper.init(),
-   init<DatabaseService>().initDatabase(),
-   init<NotificationService>().init(),
-  ]);
 }
 
 

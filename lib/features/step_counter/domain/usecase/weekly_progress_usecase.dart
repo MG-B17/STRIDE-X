@@ -6,10 +6,9 @@ class WeeklyProgressUsecase {
 
   WeeklyProgressUsecase({required this.stepRepositories});
 
-  Future<List<double>> call({required int stepGoal}) async {
-    final List<TodayDataEntity> weeklyData = await stepRepositories.getWeeklyData();
-    
-    final List<double> progressValues = List.filled(7, 0.0);
+  final List<double> progressValues = List.filled(7, 0.0); 
+
+  List<double> call({required int stepGoal ,required List<TodayDataEntity> weeklyData})  {
 
     for (var entity in weeklyData) {
       final int dayIndex = entity.date.weekday - 1; 

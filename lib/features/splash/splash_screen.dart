@@ -20,24 +20,25 @@ class _SplashScreenState extends State<SplashScreen> {
     _nextScreen();
   }
 
-  void _nextScreen() {
-    Future.delayed(const Duration(seconds: 3), () {
+  void _nextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    final bool isOnboardingVisited =
+        CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
+
+    if (isOnboardingVisited) {
+      await CachedData.initCalibrationData();
+
       if (!mounted) return;
-      final bool isOnboardingVisited =
-          CacheHelper.getData(key: AppKeys.isOnboardingVisited) ?? false;
 
-      if (isOnboardingVisited) {
-        _loadData();
-        context.goNamed(AppRouteConstant.homeScreenRoute);
-      } else {
-        context.goNamed(AppRouteConstant.onboardingScreenRoute);
-      }
-    });
+      context.goNamed(AppRouteConstant.homeScreenRoute);
+    } else {
+      context.goNamed(AppRouteConstant.onboardingScreenRoute);
+    }
   }
 
-  Future<void> _loadData() async {
-    await CachedData.initCalibrationData();
-  }
 
   @override
   Widget build(BuildContext context) {

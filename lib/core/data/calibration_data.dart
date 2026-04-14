@@ -10,6 +10,7 @@ class CachedData {
   static late StepsCalculationEntity stepsCalculationEntity;
   static late UserPhysicalData userPhysicalData;
   static late TodayDataEntity todayDataEntity;
+  static late List<TodayDataEntity> weeklyData ;
 
   static final BaselineLocalData _baselineLocalData = di
       .init<BaselineLocalData>();
@@ -20,23 +21,15 @@ class CachedData {
       .init<TodayStepLocalData>();
 
  static Future<void> initCalibrationData() async {
-  final results = await Future.wait([
-    _calibrationRepository.getUserPhysicalData(),
-    _baselineLocalData.getBaseline(), 
-    _todayStepLocalData.getTodayData(), 
-    _calibrationRepository.getFactor(), 
-  ]);
-
-  userPhysicalData = results[0] as UserPhysicalData;
-  final baseline = results[1] as int;
-  final todayData = results[2] as TodayDataEntity;
-  final stepCorrectionFactor = results[3] as double;
-
+  userPhysicalData =await _calibrationRepository.getUserPhysicalData();
+  final baseline = await _baselineLocalData.getBaseline(); 
+  final todayData = await _todayStepLocalData.getTodayData();
+  final stepCorrectionFactor =await _calibrationRepository.getFactor();
+  weeklyData =await _todayStepLocalData.getWeeklyData() ;
   stepsCalculationEntity = StepsCalculationEntity(
     baseline: baseline,
     stepCorrectionFactor: stepCorrectionFactor,
   );
-
   todayDataEntity = todayData;
 }
 

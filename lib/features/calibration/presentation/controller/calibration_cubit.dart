@@ -25,10 +25,16 @@ class CalibrationCubit extends Cubit<CalibrationState> {
   int? initialSteps;
   int currentSteps = 0;
   Gender selectedGender = Gender.male;
-  
-  final TextEditingController heightController = TextEditingController(text: '170');
-  final TextEditingController weightController = TextEditingController(text: '70');
-  final TextEditingController stepGoalController = TextEditingController(text: '2000');
+
+  final TextEditingController heightController = TextEditingController(
+    text: '170',
+  );
+  final TextEditingController weightController = TextEditingController(
+    text: '70',
+  );
+  final TextEditingController stepGoalController = TextEditingController(
+    text: '2000',
+  );
 
   static CalibrationCubit get(context) => BlocProvider.of(context);
 
@@ -53,17 +59,19 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     int? stepGoal,
   }) async {
     CachedData.userPhysicalData = UserPhysicalData(
-      height: height ?? double.tryParse(heightController.text) !,
-      weight: weight ?? double.tryParse(weightController.text) !,
+      height: height ?? double.tryParse(heightController.text)!,
+      weight: weight ?? double.tryParse(weightController.text)!,
       gender: gender ?? selectedGender,
-      stepGoal: stepGoal ?? int.tryParse(stepGoalController.text) !,
+      stepGoal: stepGoal ?? int.tryParse(stepGoalController.text)!,
     );
     await saveUserPhysicalDataUseCase(CachedData.userPhysicalData);
   }
 
   Future<void> finishCalibration() async {
-    int detectedSteps = (initialSteps == null) ? 0 : currentSteps - initialSteps!;
-    
+    int detectedSteps = (initialSteps == null)
+        ? 0
+        : currentSteps - initialSteps!;
+
     if (detectedSteps <= 0) {
       emit(const CalibrationFailure(ErrorStrings.invalidStepCount));
       emit(const CalibrationLoading());
@@ -76,8 +84,11 @@ class CalibrationCubit extends Cubit<CalibrationState> {
         realSteps: defaultCalibrationSteps,
         detectedSteps: detectedSteps,
       );
-      await calibrationRepository.saveStepCorrection(stepCorrection: entity.stepCorrection);
+      await calibrationRepository.saveStepCorrection(
+        stepCorrection: entity.stepCorrection,
+      );
       emit(CalibrationSuccess(entity.stepCorrection));
+      CachedData.initCalibrationData();
       stopListening();
     } catch (e) {
       stopListening();
@@ -107,7 +118,6 @@ class CalibrationCubit extends Cubit<CalibrationState> {
         },
       );
     });
-
   }
 
   void resetCalibration() {
@@ -131,6 +141,3 @@ class CalibrationCubit extends Cubit<CalibrationState> {
     return super.close();
   }
 }
-
-
-

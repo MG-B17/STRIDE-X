@@ -43,9 +43,9 @@ class UserDataScreen extends StatelessWidget {
                 const VerticalSpacingWidget(value: 16),
                 StrideCard(
                   child: CalibrationContentWidget(
-                    onNext: () {
-                      _nextScreen(context);
-                      CalibrationCubit.get(context).saveUserData();
+                    onNext: ()async {
+                       _nextScreen(context);
+                       CalibrationCubit.get(context).saveUserData();
                     },
                   ),
                 ),
@@ -59,6 +59,3 @@ class UserDataScreen extends StatelessWidget {
     );
   }
 }
-
-
-

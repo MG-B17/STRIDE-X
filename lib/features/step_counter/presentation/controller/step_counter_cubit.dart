@@ -11,8 +11,6 @@ class StepCounterCubit extends Cubit<StepCounterState> {
   final TodayStepsUsecase todayStepsUsecase;
   final WeeklyProgressUsecase weeklyProgressUsecase;
 
-  StreamSubscription? _streamSubscription;
-
   StepCounterCubit({
     required this.todayStepsUsecase,
     required this.distanceAndCalUsecase,
@@ -21,55 +19,52 @@ class StepCounterCubit extends Cubit<StepCounterState> {
 
   static StepCounterCubit get(context) => BlocProvider.of(context);
 
+  StreamSubscription? _streamSubscription;
+
+  final int _activeIndex = DateTime.now().weekday - 1;
+
   void startStepsStream() async {
     emit(Loading());
+    List<double> weeklyValues = weeklyProgressUsecase(
+      stepGoal: CachedData.userPhysicalData.stepGoal,
+      weeklyData: CachedData.weeklyData,
+    );
     _streamSubscription?.cancel();
+    _streamSubscription =
+        todayStepsUsecase(
+          initialTodayData: CachedData.todayDataEntity,
+          stepGoal: CachedData.userPhysicalData.stepGoal,
+          stepCorrectionFactor:
+              CachedData.stepsCalculationEntity.stepCorrectionFactor,
+          baseline: CachedData.stepsCalculationEntity.baseline,
+        ).listen((either) {
+          either.fold((failure) => emit(Error(message: failure.message)), (
+            steps,
+          ) {
+            final stepMatrixEntity = distanceAndCalUsecase(
+              steps: steps,
+              weight: CachedData.userPhysicalData.weight,
+              strideLengthCm: CachedData.userPhysicalData.strideLengthCm!,
+            );
 
-    final stepGoal = CachedData.userPhysicalData.stepGoal;
-    final weight = CachedData.userPhysicalData.weight;
-    final strideLengthCm = CachedData.userPhysicalData.strideLengthCm!;
-    final stepCorrectionFactor = CachedData.stepsCalculationEntity.stepCorrectionFactor;
-    final baseline = CachedData.stepsCalculationEntity.baseline;
-    
-    List<double> weeklyValues = await weeklyProgressUsecase(stepGoal: stepGoal);
-    int activeIndex = DateTime.now().weekday - 1;
+            final double progress =
+                (steps / CachedData.userPhysicalData.stepGoal);
 
-    _streamSubscription = todayStepsUsecase(
-      initialTodayData: CachedData.todayDataEntity,
-      stepGoal: stepGoal,
-      stepCorrectionFactor: stepCorrectionFactor,
-      baseline: baseline,
-    ).listen((either) {
-      either.fold((failure) => emit(Error(message: failure.message)), (todayData) {
-        final int steps = todayData.stepsCount;
-        
-        final stepMatrixEntity = distanceAndCalUsecase(
-          steps: steps,
-          weight: weight,
-          strideLengthCm: strideLengthCm,
-        );
-        
-        final double progress = (steps / stepGoal);
-        final int activeMinutes = todayData.activeTimeSeconds ~/ 60;
-        
-        weeklyValues[activeIndex] = progress;
+            weeklyValues[_activeIndex] = progress;
 
-        emit(
-          Loaded(
-            dailyStep: steps,
-            goalStep: stepGoal,
-            progressStep: progress,
-            calories: stepMatrixEntity.calories,
-            distance: stepMatrixEntity.distance,
-            activeTime: activeMinutes,
-            weeklyValues: List.from(weeklyValues),
-            activeIndex: activeIndex,
-          ),
-        );
-      });
-    });
+            emit(
+              Loaded(
+                dailyStep: steps,
+                goalStep: CachedData.userPhysicalData.stepGoal,
+                progressStep: progress,
+                calories: stepMatrixEntity.calories,
+                distance: stepMatrixEntity.distance,
+                activeTime: 0,
+                weeklyValues: List.from(weeklyValues),
+                activeIndex: _activeIndex,
+              ),
+            );
+          });
+        });
   }
 }
-
-
-

@@ -43,50 +43,52 @@ class _PermissionScreenState extends State<PermissionScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            BackgroundFirstDecoration(),
-            BackgroundSecondDecoration(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 20.h,
-                children: [
-                  VerticalSpacingWidget(value: 40),
-                  PermissionTittleAndSubTittle(),
-                  PermissionCard(
-                    icon: Icons.directions_run_rounded,
-                    iconBgColor: colorScheme.primary,
-                    title: AppStrings.physicalActivityTitle,
-                    description: AppStrings.physicalActivityDesc,
-                  ),
-                  PermissionCard(
-                    icon: Icons.notifications_active_rounded,
-                    iconBgColor: const Color(0xFF4B5EAA),
-                    title: AppStrings.smartAlertsTitle,
-                    description: AppStrings.smartAlertsDesc,
-                  ),
-                  // Allow button
-                  AppButton(
-                    onNext: _handleAllowPermissions,
-                    text: AppStrings.allowPermissions,
-                  ),
-
-                  // Maybe later
-                  GestureDetector(
-                    onTap: _handleMaybeLater,
-                    child: Center(
-                      child: Text(
-                        AppStrings.maybeLater,
-                        style: textTheme.bodyMedium,
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              BackgroundFirstDecoration(),
+              BackgroundSecondDecoration(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 32.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 20.h,
+                  children: [
+                    VerticalSpacingWidget(value: 40),
+                    PermissionTittleAndSubTittle(),
+                    PermissionCard(
+                      icon: Icons.directions_run_rounded,
+                      iconBgColor: colorScheme.primary,
+                      title: AppStrings.physicalActivityTitle,
+                      description: AppStrings.physicalActivityDesc,
+                    ),
+                    PermissionCard(
+                      icon: Icons.notifications_active_rounded,
+                      iconBgColor: const Color(0xFF4B5EAA),
+                      title: AppStrings.smartAlertsTitle,
+                      description: AppStrings.smartAlertsDesc,
+                    ),
+                    // Allow button
+                    AppButton(
+                      onNext: _handleAllowPermissions,
+                      text: AppStrings.allowPermissions,
+                    ),
+          
+                    // Maybe later
+                    GestureDetector(
+                      onTap: _handleMaybeLater,
+                      child: Center(
+                        child: Text(
+                          AppStrings.maybeLater,
+                          style: textTheme.bodyMedium,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
