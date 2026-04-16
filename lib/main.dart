@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stridex/bloc_observer.dart';
 import 'package:stridex/core/di/injection.dart';
 import 'package:stridex/core/services/database_service.dart';
 import 'package:stridex/core/services/notification_service.dart';
@@ -11,7 +10,6 @@ import 'package:stridex/stride_x.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
-  Bloc.observer = MyBlocObserver();
   ScreenUtil.ensureScreenSize();
   await initDependencies();
   await CacheHelper.init();

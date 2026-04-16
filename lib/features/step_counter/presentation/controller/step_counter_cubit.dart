@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
 import 'package:stridex/features/step_counter/domain/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/today_steps_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/weekly_progress_usecase.dart';
