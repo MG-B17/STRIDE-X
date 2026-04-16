@@ -27,13 +27,15 @@ import 'package:stridex/features/step_counter/domain/repositories/step_repositor
 import 'package:stridex/features/step_counter/domain/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/today_steps_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/weekly_progress_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/get_today_data_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/save_today_data_usecase.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
 
 final init = GetIt.instance;
 
 Future<void> initDependencies() async {
   //Cubit
-  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), distanceAndCalUsecase: init(), weeklyProgressUsecase: init()));
+  init.registerFactory<StepCounterCubit>(()=>StepCounterCubit(todayStepsUsecase: init(), distanceAndCalUsecase: init(), weeklyProgressUsecase: init(), getTodayDataUseCase: init(), saveTodayDataUseCase: init()));
   init.registerFactory<AnalyticsCubit>(()=>AnalyticsCubit(getAnalyticsDataUsecase: init()));
   init.registerFactory<HistoryCubit>(()=>HistoryCubit(getHistoryDataUsecase: init()));
   init.registerFactory<CalibrationCubit>(
@@ -47,10 +49,12 @@ Future<void> initDependencies() async {
 
   //UseCase
   init.registerLazySingleton(()=>DistanceAndCalUsecase());
-  init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init(), notificationService: init()));
+  init.registerLazySingleton(()=>TodayStepsUsecase(stepRepositories: init(), notificationService: init(), distanceAndCalUsecase: init()));
   init.registerLazySingleton(()=>GetAnalyticsDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>GetHistoryDataUsecase(stepRepositories: init()));
   init.registerLazySingleton(()=>WeeklyProgressUsecase(stepRepositories: init()));
+  init.registerLazySingleton(()=>GetTodayDataUseCase(stepRepositories: init()));
+  init.registerLazySingleton(()=>SaveTodayDataUseCase(stepRepositories: init()));
   init.registerLazySingleton<CalibrateStepsUseCase>(
     () => CalibrateStepsUseCaseImpl(),
   );
@@ -74,9 +78,7 @@ Future<void> initDependencies() async {
       activityPermissionService: init<ActivityPermissionService>(),
     ),
   );
-  init.registerLazySingleton<GetStepDataFormSensor>(
-    () => GetStepDataFormSensorImpl(activityPermissionService: init()),
-  );
+  
 
   // DataSource
   init.registerLazySingleton<BaselineLocalData>(() => BaselineLocalDataImpl());
@@ -84,6 +86,9 @@ Future<void> initDependencies() async {
   init.registerLazySingleton<DateHelper>(() => DateHelperImpl());
   init.registerLazySingleton<CalibrationLocalData>(
     () => CalibrationLocalDataImpl(databaseService: init()),
+  );
+  init.registerLazySingleton<GetStepDataFormSensor>(
+    () => GetStepDataFormSensorImpl(activityPermissionService: init() ,todayStepLocalData: init()),
   );
 
   // Services

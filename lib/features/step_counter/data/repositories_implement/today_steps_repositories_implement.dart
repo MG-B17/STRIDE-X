@@ -43,13 +43,17 @@ class TodayStepsRepositoriesImplement extends StepRepositories {
 
   @override
   Future<int> getCachedTodaySteps() async {
-    await baselineLocalData.saveBaseline(steps: 0);
     return await todayStepLocalData.getTodaysteps();
   }
 
   @override
   Future<void> saveTodayData({required TodayDataEntity todayData}) async {
     await todayStepLocalData.saveTodayData(todayData: todayData);
+  }
+
+  @override
+  Future<TodayDataEntity> getTodayData() async {
+    return await todayStepLocalData.getTodayData();
   }
   
   @override

@@ -6,6 +6,7 @@ import 'package:stridex/core/constant/app_strings.dart';
 import 'package:stridex/features/layout/widgets/stride_bottom_nav_bar_item.dart';
 import 'package:stridex/core/di/injection.dart'as di ;
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_cubit.dart';
+import 'package:stridex/core/utils/app_lifecycle_handler.dart';
 
 class LayoutScreen extends StatefulWidget {
   final StatefulNavigationShell shell;
@@ -17,17 +18,32 @@ class LayoutScreen extends StatefulWidget {
 
 class _LayoutScreenState extends State<LayoutScreen> {
 
+  late StepCounterCubit _stepCounterCubit;
+  late AppLifecycleHandler _lifecycleHandler;
+
   @override
   void initState() {
     super.initState();
+    _stepCounterCubit = di.init<StepCounterCubit>()..startStepsStream();
+    _lifecycleHandler = AppLifecycleHandler(
+      onPaused: () => _stepCounterCubit.saveTodaySteps(),
+      onResumed: () => _stepCounterCubit.restoreTodaySteps(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycleHandler.dispose();
+    _stepCounterCubit.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocProvider(
-      create: (context) => di.init<StepCounterCubit>()..startStepsStream(),
+    return BlocProvider.value(
+      value: _stepCounterCubit,
       child: Scaffold(
         body: widget.shell,
         bottomNavigationBar: Container(

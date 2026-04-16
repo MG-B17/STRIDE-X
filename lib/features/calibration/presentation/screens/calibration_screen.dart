@@ -22,7 +22,6 @@ class CalibrationScreen extends StatefulWidget {
 }
 
 class _CalibrationScreenState extends State<CalibrationScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -31,59 +30,61 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const StrideXAppBar(),
-                  VerticalSpacingWidget(value: 16),
-                  const StrideCalibrationWidget(),
-                  VerticalSpacingWidget(value: 16),
-                  StrideCard(
-                    child: BlocConsumer<CalibrationCubit, CalibrationState>(
-                      listener: (context, state) {
-                        if (state is CalibrationFailure) {
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const StrideXAppBar(),
+                VerticalSpacingWidget(value: 16),
+                const StrideCalibrationWidget(),
+                VerticalSpacingWidget(value: 16),
+                StrideCard(
+                  child: BlocConsumer<CalibrationCubit, CalibrationState>(
+                    listener: (context, state) {
+                      if (state is CalibrationFailure) {
                         ScaffoldMessenger.of(
                           context,
                         ).showSnackBar(SnackBar(content: Text(state.message)));
-                        } else if (state is CalibrationStreamFail) {
+                      } else if (state is CalibrationStreamFail) {
                         ScaffoldMessenger.of(
                           context,
                         ).showSnackBar(SnackBar(content: Text(state.message)));
-                        }
-                      },
-                      builder: (context, state) {
-                        return _buildCalibrationContent(
-                          state: state,
-                          context: context,
-                        );
-                      },
-                    ),
-                  ),
-                  BlocBuilder<CalibrationCubit, CalibrationState>(
-                    builder: (context, state) {
-                      if (state is CalibrationLoading ||
-                          state is CalibrationStreamSuccess) {
-                        return CompleteCalibrationButton(
-                          onPressed: () {
-                            CalibrationCubit.get(context).finishCalibration();
-                          },
-                        );
-                      } else if (state is CalibrationSuccess) {
-                        return CalibrationSuccessButton();
                       }
-                      return const SizedBox.shrink();
+                    },
+                    builder: (context, state) {
+                      return _buildCalibrationContent(
+                        state: state,
+                        context: context,
+                      );
                     },
                   ),
-                  const PrecisionGuaranteedText(),
-                ],
+                ),
+                BlocBuilder<CalibrationCubit, CalibrationState>(
+                  builder: (context, state) {
+                    if (state is CalibrationLoading ||
+                        state is CalibrationStreamSuccess) {
+                      return CompleteCalibrationButton(
+                        onPressed: () {
+                          CalibrationCubit.get(context).finishCalibration();
+                        },
+                      );
+                    } else if (state is CalibrationSuccess) {
+                      return CalibrationSuccessButton();
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+                const PrecisionGuaranteedText(),
+              ],
             ),
           ),
         ),
@@ -114,6 +115,3 @@ class _CalibrationScreenState extends State<CalibrationScreen> {
     }
   }
 }
-
-
-

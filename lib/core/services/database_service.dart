@@ -7,7 +7,13 @@ abstract class DatabaseService {
 
   Future<int> insert(String table, Map<String, dynamic> data);
 
-  Future<List<Map<String, dynamic>>> query(String table, {String? where, List<dynamic>? whereArgs});
+  Future<List<Map<String, dynamic>>> query(
+    String table, {
+    String? where,
+    List<dynamic>? whereArgs,
+    String? orderBy,
+    int? limit,
+  });
 
   Future<int> update(String table, Map<String, dynamic> data, {String? where, List<dynamic>? whereArgs});
 

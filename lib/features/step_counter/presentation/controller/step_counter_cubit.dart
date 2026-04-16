@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stridex/features/step_counter/domain/entity/today_data_entity.dart';
 import 'package:stridex/features/step_counter/domain/usecase/distance_and_cal_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/today_steps_usecase.dart';
 import 'package:stridex/features/step_counter/domain/usecase/weekly_progress_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/get_today_data_usecase.dart';
+import 'package:stridex/features/step_counter/domain/usecase/save_today_data_usecase.dart';
 import 'package:stridex/features/step_counter/presentation/controller/step_counter_states.dart';
 import 'package:stridex/core/data/calibration_data.dart';
 
@@ -10,11 +13,15 @@ class StepCounterCubit extends Cubit<StepCounterState> {
   final DistanceAndCalUsecase distanceAndCalUsecase;
   final TodayStepsUsecase todayStepsUsecase;
   final WeeklyProgressUsecase weeklyProgressUsecase;
+  final GetTodayDataUseCase getTodayDataUseCase;
+  final SaveTodayDataUseCase saveTodayDataUseCase;
 
   StepCounterCubit({
     required this.todayStepsUsecase,
     required this.distanceAndCalUsecase,
     required this.weeklyProgressUsecase,
+    required this.getTodayDataUseCase,
+    required this.saveTodayDataUseCase,
   }) : super(Initial());
 
   static StepCounterCubit get(context) => BlocProvider.of(context);
@@ -37,6 +44,8 @@ class StepCounterCubit extends Cubit<StepCounterState> {
           stepCorrectionFactor:
               CachedData.stepsCalculationEntity.stepCorrectionFactor,
           baseline: CachedData.stepsCalculationEntity.baseline,
+          weight: CachedData.userPhysicalData.weight,
+          strideLengthCm: CachedData.userPhysicalData.strideLengthCm!,
         ).listen((either) {
           either.fold((failure) => emit(Error(message: failure.message)), (
             steps,
@@ -66,5 +75,23 @@ class StepCounterCubit extends Cubit<StepCounterState> {
             );
           });
         });
+  }
+
+  Future<void> saveTodaySteps() async {
+    final currentState = state;
+    if (currentState is Loaded) {
+      final todayData = CachedData.todayDataEntity.copyWith(
+        stepsCount: currentState.dailyStep,
+        calories: currentState.calories,
+        distance: currentState.distance,
+        activeTimeSeconds: currentState.activeTime,
+      );
+      await saveTodayDataUseCase(todayData);
+    }
+  }
+
+  Future<void> restoreTodaySteps() async {
+    final todayData = await getTodayDataUseCase();
+    CachedData.todayDataEntity = todayData;
   }
 }

@@ -9,6 +9,8 @@ abstract class StepRepositories {
 
   Future<void> saveTodayData({required TodayDataEntity todayData});
 
+  Future<TodayDataEntity> getTodayData();
+
   Future<int> getCachedTodaySteps();
 
   Future<void> saveBaseline({required int baseline});

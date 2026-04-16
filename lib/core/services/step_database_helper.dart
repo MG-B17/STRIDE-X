@@ -20,7 +20,7 @@ class StepDatabaseHelper implements DatabaseService {
   @override
   Future<void> initDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'STRIDe_X.db');
+    final path = join(dbPath, 'STRIDE_X.db');
 
     _database = await openDatabase(
       path,
@@ -138,9 +138,17 @@ class StepDatabaseHelper implements DatabaseService {
     String table, {
     String? where,
     List<dynamic>? whereArgs,
+    String? orderBy,
+    int? limit,
   }) async {
     final db = await database;
-    return await db.query(table, where: where, whereArgs: whereArgs);
+    return await db.query(
+      table,
+      where: where,
+      whereArgs: whereArgs,
+      orderBy: orderBy,
+      limit: limit,
+    );
   }
 
   @override

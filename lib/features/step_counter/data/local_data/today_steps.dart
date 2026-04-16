@@ -31,10 +31,25 @@ class StepCounterLocalDataImpl extends TodayStepLocalData {
   @override
   Future<void> saveTodaySteps({required int steps}) async {
     final todayStr = DateTime.now().toIso8601String().split('T')[0];
-    await databaseService.insert('steps', {
-      'steps_count': steps,
-      'date': todayStr,
-    });
+    final existing = await databaseService.query(
+      'steps',
+      where: 'date = ?',
+      whereArgs: [todayStr],
+    );
+
+    if (existing.isNotEmpty) {
+      await databaseService.update(
+        'steps',
+        {'steps_count': steps},
+        where: 'date = ?',
+        whereArgs: [todayStr],
+      );
+    } else {
+      await databaseService.insert('steps', {
+        'steps_count': steps,
+        'date': todayStr,
+      });
+    }
   }
 
   @override
@@ -46,6 +61,8 @@ class StepCounterLocalDataImpl extends TodayStepLocalData {
       'steps',
       where: 'date = ?',
       whereArgs: [todayStr],
+      orderBy: 'id DESC',
+      limit: 1,
     );
 
     if (results.isNotEmpty) {

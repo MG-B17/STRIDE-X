@@ -7,14 +7,18 @@ import 'package:stridex/core/services/notification_service.dart';
 import 'package:stridex/core/constant/keys.dart';
 import 'package:stridex/core/utils/cache_helper.dart';
 
+import 'package:stridex/features/step_counter/domain/usecase/distance_and_cal_usecase.dart';
+
 class TodayStepsUsecase {
   final StepRepositories stepRepositories;
   final NotificationService notificationService;
+  final DistanceAndCalUsecase distanceAndCalUsecase;
   int _lastSavedSteps = 0 ;
 
   TodayStepsUsecase({
     required this.stepRepositories,
     required this.notificationService,
+    required this.distanceAndCalUsecase,
   });
 
 
@@ -23,8 +27,17 @@ class TodayStepsUsecase {
     required int stepGoal,
     required double stepCorrectionFactor,
     required int baseline,
+    required double weight,
+    required double strideLengthCm,
   }) async* {
     int currentBaseline = baseline;
+
+    // Emit initial saved steps immediately to resolve UI loading delay
+    if (_isTheSameDay(day: initialTodayData.date)) {
+      yield right(initialTodayData.stepsCount);
+    } else {
+      yield right(0);
+    }
 
     yield* stepRepositories.todaySteps().asyncMap((either) async {
       return await either.fold(
@@ -49,6 +62,17 @@ class TodayStepsUsecase {
             stepCorrectionFactor: stepCorrectionFactor,
           );
 
+          final metrics = distanceAndCalUsecase(
+            steps: correctedSteps,
+            weight: weight,
+            strideLengthCm: strideLengthCm,
+          );
+
+          initialTodayData = initialTodayData.copyWith(
+            stepsCount: correctedSteps,
+            calories: metrics.calories,
+            distance: metrics.distance,
+          );
 
           if (_isTimeToSave(
             lastSavedSteps:_lastSavedSteps,
@@ -113,7 +137,7 @@ class TodayStepsUsecase {
     required int lastSavedSteps,
     required int correctedSteps,
   }) {
-    return (correctedSteps - lastSavedSteps) >= 50;
+    return (correctedSteps - lastSavedSteps) >= 10;
   }
 
   bool _isTheSameDay({required DateTime day}) {
