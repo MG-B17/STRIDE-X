@@ -5,7 +5,7 @@
 StrideX is a premium, lightweight health and fitness application built with Flutter. It features a sophisticated dynamic theme engine with full support for Light and Dark modes, ensuring a high-end user experience. Built on Clean Architecture, the app provides a modular structure while maintaining a very small footprint (only 20.0 MB). It transforms raw pedometer data into actionable health insights through beautiful, responsive analytics
 
 ## 🎦 Video Demonstration
-🎥 [Watch App Demo]()
+🎥 [Watch App Demo](https://www.linkedin.com/posts/mostafa-galal-17-m_flutter-dart-cleanarchitecture-activity-7450546345360154624-iJfr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFVnLiUBOzIS2YcbSJ9Dv1tz8wJKu0EsvVo)
 
 ## 📱 Screenshot
 ![Image](https://github.com/user-attachments/assets/12dd07b4-3680-449c-92e3-cb031ff6bb6f) 
